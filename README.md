@@ -15,9 +15,18 @@ Design and create a functional parking sensor model using a Raspberry Pi Pico W 
 ## 🛠️ Hardware & Components
 
 ### 1. [Raspberry Pi Pico W](https://pip-assets.raspberrypi.com/categories/686-raspberry-pi-pico-w/documents/RP-008312-DS-2-pico-w-datasheet.pdf)
-![Raspberry Pi Pico Pinout](Images/raspberry_pinout.png)
 
 Chosen as our main microcontroller processing unit for its low cost, dual-core processor, and built-in wireless connectivity capabilities.
+
+![Raspberry Pi Pico Pinout](Images/raspberry_pinout.png)
+
+---
+
+### 2. [HC-SR04 Ultrasonic Distance Sensor](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf) (2×)
+
+Provides accurate, non-contact distance measurement from 2 cm to 400 cm using high-frequency sonar waves to detect nearby obstacles.
+
+![Ultrasonic Sensor](Images/Ultrasonic.png)
 
 
 
