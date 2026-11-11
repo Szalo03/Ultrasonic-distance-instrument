@@ -12,6 +12,17 @@ Design and create a functional parking sensor model using a Raspberry Pi Pico W 
 
 ---
 
+## 🛠️ Hardware & Components
+
+### 1. [Raspberry Pi Pico W](https://pip-assets.raspberrypi.com/categories/686-raspberry-pi-pico-w/documents/RP-008312-DS-2-pico-w-datasheet.pdf)
+![Raspberry Pi Pico Pinout](Images/raspberry_pinout.png)
+
+Chosen as our main microcontroller processing unit for its low cost, dual-core processor, and built-in wireless connectivity capabilities.
+
+
+
+
+
 Hardware - Raspberry Pi Pico W Microcontroller, 2 x HC-SR04 Ultrasonic Sensor, Nokia 5110 LCD SPI Display, HW-508 v0.2 Passive Buzzer
 
 Project Goal: Design and create a functional parking sensor model using raspberry microcontroller, which shows the precise current distance from the object in the way on the display, additional sound warning
