@@ -18,7 +18,9 @@ Design and create a functional parking sensor model using a Raspberry Pi Pico W 
 
 Chosen as our main microcontroller processing unit for its low cost, dual-core processor, and built-in wireless connectivity capabilities.
 
+<div align="center">
 ![Raspberry Pi Pico Pinout](Images/raspberry_pinout.png)
+<div>
 
 ---
 
@@ -26,8 +28,9 @@ Chosen as our main microcontroller processing unit for its low cost, dual-core p
 
 Provides accurate, non-contact distance measurement from 2 cm to 400 cm using high-frequency sonar waves to detect nearby obstacles.
 
+<div align="center">
 ![Ultrasonic Sensor](Images/HC_SR04_Pinout.png)
-
+<div>
 
 
 
