@@ -6,9 +6,9 @@ Design and create a functional parking sensor model using a Raspberry Pi Pico W 
 ---
 
 ## 👥 Team Members
-> Marek Šádek,
-> Marek Gláser,
-> Dávid Szalay
+> [Marek Šádek](https://github.com/SadekMarek),
+> [Marek Gláser](https://github.com/glasermarek),
+> [Dávid Szalay](https://github.com/Szalo03)
 
 ---
 
