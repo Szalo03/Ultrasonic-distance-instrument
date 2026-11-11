@@ -1,13 +1,14 @@
 # Ultrasonic-distance-instrument
 
-> **Project Goal:** Design and create a functional parking sensor model using a Raspberry Pi Pico W microcontroller. The system displays the precise distance from an obstacle on an LCD screen and provides an audible warning as the distance changes.
+## 🎯 Project Goal
+Design and create a functional parking sensor model using a Raspberry Pi Pico W microcontroller. The system displays the precise distance from an obstacle on an LCD screen and provides an audible warning as the distance changes.
 
 ---
 
 ## 👥 Team Members
-* **[Marek Šádek]**
-* **[Marek Gláser]**
-* **[Dávid Szalay]**
+> Marek Šádek,
+> Marek Gláser,
+> Dávid Szalay
 
 ---
 
