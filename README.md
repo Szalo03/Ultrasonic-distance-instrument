@@ -18,7 +18,9 @@ Design and create a functional parking sensor model using a Raspberry Pi Pico W 
 
 Chosen as our main microcontroller processing unit for its low cost, dual-core processor, and built-in wireless connectivity capabilities.
 
-![Raspberry Pi Pico Pinout](Images/raspberry_pinout.png)
+<p align="center">
+  <img src="Images/raspberry_pinout.png" alt="Raspberry Pi Pico Pinout" />
+</p>
 
 ---
 
@@ -26,7 +28,9 @@ Chosen as our main microcontroller processing unit for its low cost, dual-core p
 
 Simplifies our wiring setup by providing convenient plug-and-play breakout headers for connecting our display, sensors, and buzzer without messy breadboards.
 
-![DFRobot Gravity Shield](Images/dfrobot_gravity_board.png)
+<p align="center">
+  <img src="Images/dfrobot_gravity_board.png" alt="DFRobot Gravity Shield" />
+</p>
 
 ---
 
@@ -34,7 +38,9 @@ Simplifies our wiring setup by providing convenient plug-and-play breakout heade
 
 Provides accurate, non-contact distance measurement from 2 cm to 400 cm using high-frequency sonar waves to detect nearby obstacles.
 
-![Ultrasonic Sensor](Images/HC_SR04_Pinout.png)
+<p align="center">
+  <img src="Images/HC_SR04_Pinout.png" alt="Ultrasonic Sensor" />
+</p>
 
 ---
 
@@ -42,7 +48,9 @@ Provides accurate, non-contact distance measurement from 2 cm to 400 cm using hi
 
 A low-power 84×48 pixel monochrome display used to output real-time distance measurements, status diagnostics, and visual warnings to the user.
 
-![Nokia 5110 LCD Pinout](Images/Nokia_5110_LCD_Pinout.png)
+<p align="center">
+  <img src="Images/Nokia_5110_LCD_Pinout.png" alt="Nokia 5110 LCD Pinout" />
+</p>
 
 ---
 
@@ -50,7 +58,8 @@ A low-power 84×48 pixel monochrome display used to output real-time distance me
 
 Outputs variable-frequency sound alerts that speed up or change tone as an object moves closer to the sensors, creating an intuitive audible parking assistant.
 
-![Passive Buzzer](Images/Buzzer_Pinout.png)
+<p align="center">
+  <img src="Images/Buzzer_Pinout.png" alt="Passive Buzzer" />
+</p>
 
 ---
-
