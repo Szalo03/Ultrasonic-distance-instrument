@@ -26,7 +26,7 @@ Chosen as our main microcontroller processing unit for its low cost, dual-core p
 
 Provides accurate, non-contact distance measurement from 2 cm to 400 cm using high-frequency sonar waves to detect nearby obstacles.
 
-![Ultrasonic Sensor](Images/HC-SR04 Pinout.png)
+![Ultrasonic Sensor](Images/HC_SR04_Pinout.png)
 
 
 
