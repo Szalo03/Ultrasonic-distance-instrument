@@ -89,7 +89,7 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 
 ## Schematic
 
-<p align="center"><img src="Images/schematic.svg" alt="Schematic" /></p>
+<p align="center"><img src="Images/schematic.svg" alt="Schematic" width="100%" /></p>
 
 ---
 
