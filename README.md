@@ -65,7 +65,8 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 | Resistors 1 kΩ + 2 kΩ | 2 + 2 | ECHO voltage dividers |
 
 
-**Sensor supply:** The Pico pins accept max. 3.3 V and the sensor's ECHO output has the same voltage as its supply. We will first test the sensors on 3.3 V. If they do not measure reliably, we will power them from VBUS (5 V) and connect ECHO through a 1 kΩ / 2 kΩ voltage divider.
+**Sensor supply:** Our HC-SR04 modules are the original 5 V version and do not work reliably on 3.3 V, so they are powered from VBUS (5 V, available when the Pico is powered over USB). The ECHO output then also has 5 V, while the Pico pins accept max. 3.3 V. Each ECHO is therefore connected through a voltage divider: 1 kΩ between ECHO and the GPIO pin, 2 kΩ between the GPIO pin and GND, which gives 5 V · 2/3 ≈ 3.3 V. TRIG is connected directly. The divider was verified on real hardware.
+
 
 <details>
 <summary>Component pinouts</summary>
