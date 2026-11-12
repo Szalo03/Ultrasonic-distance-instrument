@@ -22,13 +22,13 @@ Two HC-SR04 sensors are mounted side by side, like on a car bumper. They are tri
   <img src="Images/How_Ultrasonic_Works.png" alt="Ultrasonic sensor principle showing Transmitter, Receiver, original wave, and reflected wave" width="550" />
 </p>
 
-Each HC-SR04 module consists of an ultrasonic **Transmitter** and **Receiver**. When the Pico sends a short trigger pulse (`TRIG`), the **Transmitter** emits an ultrasonic burst (**original wave**) that travels through the air, bounces off an obstacle, and returns as a **reflected wave** to the **Receiver**.
+When the Pico sends a short **Start Pulse** (`TRIG`), the sensor emits an ultrasonic burst (**Chirp**) that travels through the air, bounces off an obstacle, and returns as an **Echo** to the receiver.
 
-The sensor sets its `ECHO` pin HIGH for the exact duration $t$ between sending the pulse and receiving the echo. Since the sound wave travels to the object and back (twice the distance), the Pico calculates the one-way distance $d$ using the speed of sound in air ($v \approx 343\text{ m/s}$, or $0.0343\text{ cm/}\mu\text{s}$):
+At the same time, the sensor outputs an **Echo Time Pulse** (`ECHO`) whose HIGH duration $t$ equals the total travel time of the sound wave from emission to reception. Since the wave travels to the obstacle and back (twice the distance), the Pico calculates the one-way distance $d$ using the speed of sound in air ($v \approx 343\text{ m/s}$, or $0.0343\text{ cm/}\mu\text{s}$):
 
 $$d = \frac{t \times 0.0343}{2}\text{ [cm]}$$
 
-where $t$ is the `ECHO` pulse duration in microseconds ($\mu\text{s}$).
+where $t$ is the **Echo Time Pulse** duration in microseconds ($\mu\text{s}$) measured by our pin interrupt.
 
 **Display** – shows the distance in cm for the left and right side, each with a bar that fills up as the obstacle gets closer. When no echo is received or the value is out of range, `---` is shown instead of a wrong number.
 
