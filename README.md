@@ -89,18 +89,25 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 
 ## Pin assignment
 
-| Device | Signal | GPIO | Pico pin |
-|---|---|---|---|
-| Nokia 5110 | CLK | GP18 (SPI0) | 24 |
-| | DIN | GP19 (SPI0) | 25 |
-| | CE | GP17 | 22 |
-| | DC | GP20 | 26 |
-| | RST | GP21 | 27 |
-| | BL (backlight) | GP22 | 29 |
-| HC-SR04 left | TRIG / ECHO | GP2 / GP3 | 4 / 5 |
-| HC-SR04 right | TRIG / ECHO | GP12 / GP13 | 16 / 17 |
-| Buzzer | SIG (PWM) | GP14 | 19 |
-| Button | to GND, internal pull-up | GP15 | 20 |
+All signal wires use the **Digital** header on the left side of the Gravity board (each row has signal / 3V3 / GND). Only the sensor supply comes from the VBUS pin.
+
+| Device | Signal | GPIO | Pico pin | Supply |
+|---|---|---|---|---|
+| Nokia 5110 | CLK | GP18 (SPI0 SCK) | 24 | VCC → 3V3, GND → GND |
+| | DIN | GP19 (SPI0 MOSI) | 25 | |
+| | CE | GP17 | 22 | |
+| | DC | GP20 | 26 | |
+| | RST | GP21 | 27 | |
+| | LIGHT (backlight) | GP22 | 29 | |
+| HC-SR04 left | TRIG | GP2 | 4 | VCC → VBUS (pin 40), GND → GND |
+| | ECHO (via divider) | GP3 | 5 | |
+| HC-SR04 right | TRIG | GP12 | 16 | VCC → VBUS (pin 40), GND → GND |
+| | ECHO (via divider) | GP13 | 17 | |
+| Buzzer | S (PWM) | GP14 | 19 | + → 3V3, − → GND |
+| Button | to GND, internal pull-up | GP15 | 20 | |
+
+GP16 (SPI0 MISO) is not used, because the display only receives data.
+
 
 ---
 
