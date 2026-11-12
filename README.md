@@ -61,7 +61,7 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 | [HC-SR04 ultrasonic sensor](https://cdn.sparkfun.com/datasheets/Sensors/Proximity/HCSR04.pdf) | 2 | Distance measurement, 2–400 cm |
 | [Nokia 5110 LCD, SPI](https://cdn.sparkfun.com/assets/b/1/b/e/f/Nokia5110.pdf) | 1 | 84 × 48 px display |
 | [HW-508 passive buzzer](https://www.datasheethub.com/datasheets/others/hw-508-small-passive-buzzer-module-datasheet.pdf) | 1 | Sound warning, tone set by PWM |
-| Push button | 1 | Mute, STOP distance setting |
+| [Push button](Images/Push_Button.png) | 1 | Mute, STOP distance setting |
 | Resistors 1 kΩ + 2 kΩ | 2 + 2 | ECHO voltage dividers |
 
 
