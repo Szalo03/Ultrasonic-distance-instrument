@@ -76,6 +76,7 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 <p align="center"><img src="Images/HC_SR04_Pinout.png" alt="HC-SR04 pinout" /></p>
 <p align="center"><img src="Images/Nokia_5110_LCD_Pinout.png" alt="Nokia 5110 pinout" /></p>
 <p align="center"><img src="Images/Buzzer_Pinout.png" alt="Passive buzzer pinout" /></p>
+<p align="center"><img src="Images/Push_Button.png" alt="Push button" width="400" /></p>
 
 </details>
 
