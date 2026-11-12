@@ -117,16 +117,6 @@ GP16 (SPI0 MISO) is not used, because the display only receives data.
 
 
 
-## Software
-
-Only built-in MicroPython modules are used: `machine`, `time`, `framebuf`, `uasyncio`, `json`.
-
-| Class | Purpose |
-|---|---|
-| `PCD8544` | Nokia 5110 display driver (based on `framebuf`) |
-| `UltrasonicSensor` | Trigger, echo time measurement, distance in cm |
-| `Buzzer` | PWM tone, beeping by distance, mute |
-| `Button` | Debounce, short / long press detection |
 
 ---
 
