@@ -18,6 +18,18 @@ A parking sensor model built on a **Raspberry Pi Pico W** in **MicroPython**. Tw
 
 Two HC-SR04 sensors are mounted side by side, like on a car bumper. They are triggered alternately, because triggering them at the same time would make them pick up each other's echo. Each reading is filtered to remove random jumps.
 
+<p align="center">
+  <img src="Images/How_Ultrasonic_Works.png" alt="Ultrasonic sensor principle showing Transmitter, Receiver, original wave, and reflected wave" width="550" />
+</p>
+
+Each HC-SR04 module consists of an ultrasonic **Transmitter** and **Receiver**. When the Pico sends a short trigger pulse (`TRIG`), the **Transmitter** emits an ultrasonic burst (**original wave**) that travels through the air, bounces off an obstacle, and returns as a **reflected wave** to the **Receiver**.
+
+The sensor sets its `ECHO` pin HIGH for the exact duration $t$ between sending the pulse and receiving the echo. Since the sound wave travels to the object and back (twice the distance), the Pico calculates the one-way distance $d$ using the speed of sound in air ($v \approx 343\text{ m/s}$, or $0.0343\text{ cm/}\mu\text{s}$):
+
+$$d = \frac{t \times 0.0343}{2}\text{ [cm]}$$
+
+where $t$ is the `ECHO` pulse duration in microseconds ($\mu\text{s}$).
+
 **Display** – shows the distance in cm for the left and right side, each with a bar that fills up as the obstacle gets closer. When no echo is received or the value is out of range, `---` is shown instead of a wrong number.
 
 **Buzzer** – follows the closer of the two sensors:
