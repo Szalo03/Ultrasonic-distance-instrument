@@ -83,7 +83,7 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 
 ## Wiring diagram
 
-*To be added.*
+<p align="center"><img src="Images/Wiring_diagram.png" alt="Wiring Diagram" /></p>
 
 ---
 
