@@ -62,6 +62,8 @@ The STOP distance is stored in the Pico's flash, so it stays saved after a resta
 | [Nokia 5110 LCD, SPI](https://cdn.sparkfun.com/assets/b/1/b/e/f/Nokia5110.pdf) | 1 | 84 × 48 px display |
 | [HW-508 passive buzzer](https://www.datasheethub.com/datasheets/others/hw-508-small-passive-buzzer-module-datasheet.pdf) | 1 | Sound warning, tone set by PWM |
 | Push button | 1 | Mute, STOP distance setting |
+| Resistors 1 kΩ + 2 kΩ | 2 + 2 | ECHO voltage dividers |
+
 
 **Sensor supply:** The Pico pins accept max. 3.3 V and the sensor's ECHO output has the same voltage as its supply. We will first test the sensors on 3.3 V. If they do not measure reliably, we will power them from VBUS (5 V) and connect ECHO through a 1 kΩ / 2 kΩ voltage divider.
 
