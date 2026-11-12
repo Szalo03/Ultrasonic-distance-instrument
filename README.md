@@ -136,3 +136,4 @@ The ECHO pulse is measured with a pin interrupt that only stores the time of the
 ## Progress
 
 **Week 1** – Topic chosen, components selected, functionality and button control designed, pin assignment and timing plan drafted.
+**Week 2** – First prototype tested on real hardware (`tests/prototype.py`): one HC-SR04 sensor with the ECHO voltage divider, Nokia 5110 display and buzzer. The display showed the measured distance and the buzzer beeped faster as the obstacle got closer. Wiring diagram and schematic added.
