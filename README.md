@@ -117,6 +117,17 @@ GP16 (SPI0 MISO) is not used, because the display only receives data.
 
 
 
+## Planned software structure
+
+| File | Class | Purpose |
+|---|---|---|
+| `main.py` | – | Starts the uasyncio tasks and connects all components |
+| `nokia5110.py` | `PCD8544` | Display driver (already working in `tests/prototype.py`) |
+| `ultrasonic.py` | `UltrasonicSensor` | Trigger, echo time, distance in cm |
+| `buzzer.py` | `Buzzer` | PWM tone, beeping by distance, mute |
+| `button.py` | `Button` | Debounce, short / long press |
+
+
 
 ---
 
