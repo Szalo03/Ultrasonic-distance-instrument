@@ -70,19 +70,23 @@ def measure_distance(trig_pin, echo_pin):
 # ==========================================
 # 3. HLAVNÍ PROGRAM (MAIN)
 # ==========================================
-# Pin konfigurace
-# BL=0, DC=1, RST=2, CS(CE)=17, SCK=18, MO=19, Buzzer_S=12
-trig = machine.Pin(4, machine.Pin.OUT)
-echo = machine.Pin(5, machine.Pin.IN)
+# Pin konfigurace (podle tabulky Pin assignment v README)
+# TRIG=2, ECHO=3 (přes dělič 1k/2k), CE=17, SCK=18, DIN=19, DC=20, RST=21, LIGHT=22,
+# Buzzer_S=14, Tlačítko=15
+trig = machine.Pin(2, machine.Pin.OUT)
+echo = machine.Pin(3, machine.Pin.IN)
 
-rst = machine.Pin(2, machine.Pin.OUT)
-dc = machine.Pin(1, machine.Pin.OUT)
+rst = machine.Pin(21, machine.Pin.OUT)
+dc = machine.Pin(20, machine.Pin.OUT)
 cs = machine.Pin(17, machine.Pin.OUT)
-bl = machine.Pin(0, machine.Pin.OUT)
-bl.value(1) # Podsvícení (vypnuto)
+bl = machine.Pin(22, machine.Pin.OUT)
+bl.value(1) # Podsvícení (1 = vypnuto, aktivní v nule)
 
-# Inicializace Buzzeru (PWM pro generování tónu) na Pinu 16
-buzzer = machine.PWM(machine.Pin(12))
+# Tlačítko proti GND, interní pull-up (stisk = 0)
+button = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
+
+# Inicializace Buzzeru (PWM pro generování tónu) na Pinu 14
+buzzer = machine.PWM(machine.Pin(14))
 buzzer.freq(1000) # Frekvence tónu 1 kHz
 buzzer.duty_u16(0) # Na začátku je bzučák potichu
 
@@ -101,9 +105,23 @@ time.sleep(2)
 # Proměnné pro neblokující pípání
 last_beep_time = time.ticks_ms()
 buzzer_is_on = False
+
+# Proměnné pro tlačítko (mute)
+muted = False
+last_button = 1
+last_press_time = time.ticks_ms()
+
 while True:
     dist = measure_distance(trig, echo)
     current_time = time.ticks_ms()
+
+    # Tlačítko: při stisku (přechod 1 -> 0) přepnout mute, 200 ms ošetření zákmitů
+    state = button.value()
+    if last_button == 1 and state == 0:
+        if time.ticks_diff(current_time, last_press_time) > 200:
+            muted = not muted
+            last_press_time = current_time
+    last_button = state
     
     lcd.clear()
     lcd.text("Vzdalenost:", 0, 0, 1)
@@ -141,6 +159,10 @@ while True:
     else:
         lcd.text("Mimo dosah", 0, 15, 1)
         buzzer.duty_u16(0) # Ticho při chybě měření
+
+    if muted:
+        buzzer.duty_u16(0) # Ztlumeno tlačítkem
+        lcd.text("MUTE", 0, 40, 1)
 
     lcd.show()
     time.sleep_ms(50)
