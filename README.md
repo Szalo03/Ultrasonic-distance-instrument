@@ -115,7 +115,7 @@ All signal wires use the **Digital** header on the left side of the Gravity boar
 
 GP16 (SPI0 MISO) is not used, because the display only receives data.
 
-
+---
 
 ## Planned software structure
 
