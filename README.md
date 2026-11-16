@@ -7,10 +7,10 @@ A parking sensor model built on a **Raspberry Pi Pico W** in **MicroPython**. Tw
 ## Team
 
 | Member | Responsibility |
-|---|---|
-| [Marek Šádek](https://github.com/SadekMarek) | TBD |
-| [Marek Gláser](https://github.com/glasermarek) | TBD |
-| [Dávid Szalay](https://github.com/Szalo03) | TBD |
+|---|---|| [Marek Šádek](https://github.com/SadekMarek) | Project design, hardware testing, software development |
+| [Marek Gláser](https://github.com/glasermarek) | Project design, hardware testing, software development |
+| [Dávid Szalay](https://github.com/Szalo03) | Project design, hardware testing, software development |
+
 
 ---
 
