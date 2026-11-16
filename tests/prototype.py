@@ -3,7 +3,7 @@ import time
 import framebuf
 
 # ==========================================
-# 1. TŘÍDA PRO DISPLEJ NOKIA 5110 (PCD8544)
+# 1. NOKIA 5110 DISPLAY CLASS (PCD8544)
 # ==========================================
 class PCD8544(framebuf.FrameBuffer):
     def __init__(self, spi, cs, dc, rst):
@@ -22,12 +22,12 @@ class PCD8544(framebuf.FrameBuffer):
         time.sleep_ms(10)
         self.rst.value(1)
         
-        self.command(0x21) # Rozšířené příkazy
-        self.command(0xBF) # Kontrast
-        self.command(0x04) # Teplotní koeficient
+        self.command(0x21) # Extended instruction set
+        self.command(0xBF) # Contrast
+        self.command(0x04) # Temperature coefficient
         self.command(0x14) # Bias
-        self.command(0x20) # Základní příkazy
-        self.command(0x0C) # Normální zobrazení
+        self.command(0x20) # Basic instruction set
+        self.command(0x0C) # Normal display mode
         self.clear()
         self.show()
 
@@ -49,7 +49,7 @@ class PCD8544(framebuf.FrameBuffer):
         self.cs.value(1)
 
 # ==========================================
-# 2. FUNKCE PRO SENZOR HC-SR04
+# 2. HC-SR04 SENSOR FUNCTION
 # ==========================================
 def measure_distance(trig_pin, echo_pin):
     trig_pin.value(0)
@@ -68,11 +68,11 @@ def measure_distance(trig_pin, echo_pin):
     return -1.0
 
 # ==========================================
-# 3. HLAVNÍ PROGRAM (MAIN)
+# 3. MAIN PROGRAM
 # ==========================================
-# Pin konfigurace (podle tabulky Pin assignment v README)
-# TRIG=2, ECHO=3 (přes dělič 1k/2k), CE=17, SCK=18, DIN=19, DC=20, RST=21, LIGHT=22,
-# Buzzer_S=14, Tlačítko=15
+# Pin configuration (see Pin assignment in README)
+# TRIG=2, ECHO=3 (via 1k/2k divider), CE=17, SCK=18, DIN=19, DC=20, RST=21, LIGHT=22,
+# Buzzer_S=14, Button=15
 trig = machine.Pin(2, machine.Pin.OUT)
 echo = machine.Pin(3, machine.Pin.IN)
 
@@ -80,33 +80,33 @@ rst = machine.Pin(21, machine.Pin.OUT)
 dc = machine.Pin(20, machine.Pin.OUT)
 cs = machine.Pin(17, machine.Pin.OUT)
 bl = machine.Pin(22, machine.Pin.OUT)
-bl.value(1) # Podsvícení (1 = vypnuto, aktivní v nule)
+bl.value(1) # Backlight (1 = off, active low)
 
-# Tlačítko proti GND, interní pull-up (stisk = 0)
+# Button to GND, internal pull-up (pressed = 0)
 button = machine.Pin(15, machine.Pin.IN, machine.Pin.PULL_UP)
 
-# Inicializace Buzzeru (PWM pro generování tónu) na Pinu 14
+# Buzzer initialisation (PWM tone) on GP14
 buzzer = machine.PWM(machine.Pin(14))
-buzzer.freq(1000) # Frekvence tónu 1 kHz
-buzzer.duty_u16(0) # Na začátku je bzučák potichu
+buzzer.freq(1000) # Tone frequency 1 kHz
+buzzer.duty_u16(0) # Buzzer silent at start
 
-# Inicializace SPI displeje
+# SPI display initialisation
 spi = machine.SPI(0, baudrate=3200000, polarity=0, phase=0, 
                   sck=machine.Pin(18), mosi=machine.Pin(19))
 lcd = PCD8544(spi, cs, dc, rst)
 
-# Uvítání
+# Welcome screen
 lcd.clear()
 lcd.text("Radar s", 18, 10, 1)
 lcd.text("buzzerem", 14, 25, 1)
 lcd.show()
 time.sleep(2)
 
-# Proměnné pro neblokující pípání
+# Variables for non-blocking beeping
 last_beep_time = time.ticks_ms()
 buzzer_is_on = False
 
-# Proměnné pro tlačítko (mute)
+# Button variables (mute)
 muted = False
 last_button = 1
 last_press_time = time.ticks_ms()
@@ -115,7 +115,7 @@ while True:
     dist = measure_distance(trig, echo)
     current_time = time.ticks_ms()
 
-    # Tlačítko: při stisku (přechod 1 -> 0) přepnout mute, 200 ms ošetření zákmitů
+    # Button: toggle mute on press (1 -> 0 transition), 200 ms debounce
     state = button.value()
     if last_button == 1 and state == 0:
         if time.ticks_diff(current_time, last_press_time) > 200:
@@ -129,39 +129,39 @@ while True:
     if dist >= 0:
         lcd.text("{:.1f} cm".format(dist), 0, 15, 1)
         
-        # Grafický ukazatel (čára se zkracuje s klesající vzdáleností)
+        # Bar indicator (gets shorter as the distance decreases)
         bar_length = int(min(dist, 84))
         lcd.fill_rect(0, 30, bar_length, 8, 1) 
         
-        # Logika pípání bzučáku
+        # Buzzer beeping logic
         if dist < 10.0:
-            # Kritická blízkost: nepřerušovaný tón
-            buzzer.duty_u16(32768) # 50% střída pro hlasitý zvuk
+            # Critical distance: continuous tone
+            buzzer.duty_u16(32768) # 50 % duty cycle for a loud tone
             buzzer_is_on = True
         elif dist < 50.0:
-            # Běžná blízkost: pípání s frekvencí podle vzdálenosti
-            # Výpočet intervalu: např. 40 cm = 400 ms pauza, 10 cm = 100 ms pauza
+            # Normal distance: beep rate depends on distance
+            # Interval: e.g. 40 cm = 400 ms pause, 10 cm = 100 ms pause
             beep_interval = int(dist * 10) 
             
-            # Pokud uběhl časový interval, přepneme stav bzučáku
+            # Toggle the buzzer when the interval has elapsed
             if time.ticks_diff(current_time, last_beep_time) > beep_interval:
                 buzzer_is_on = not buzzer_is_on
                 if buzzer_is_on:
-                    buzzer.duty_u16(32768) # Zapnout zvuk
+                    buzzer.duty_u16(32768) # Sound on
                 else:
-                    buzzer.duty_u16(0)     # Vypnout zvuk
+                    buzzer.duty_u16(0)     # Sound off
                 last_beep_time = current_time
         else:
-            # Bezpečná vzdálenost (nad 50 cm): ticho
+            # Safe distance (above 50 cm): silent
             buzzer.duty_u16(0)
             buzzer_is_on = False
             
     else:
         lcd.text("Mimo dosah", 0, 15, 1)
-        buzzer.duty_u16(0) # Ticho při chybě měření
+        buzzer.duty_u16(0) # Silent on measurement error
 
     if muted:
-        buzzer.duty_u16(0) # Ztlumeno tlačítkem
+        buzzer.duty_u16(0) # Muted by the button
         lcd.text("MUTE", 0, 40, 1)
 
     lcd.show()
