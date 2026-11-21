@@ -21,9 +21,8 @@ A rear parking sensor model built on a **Raspberry Pi Pico W** in **MicroPython*
 Two HC-SR04 sensors are mounted side by side on the rear bumper. They are triggered alternately, because triggering them at the same time would make them pick up each other's echo. Each reading is filtered by a median of the last 3 readings to remove random jumps.
 
 <p align="center">
-  <img src="Images/How_Ultrasonic_Works.png" alt="Ultrasonic sensor timing and wave diagram showing Start Pulse, Chirp, Echo, and Echo Time Pulse" width="800" />
-</p>
-<p align="center"><sub>Source: Beijing Ultrasonic, <a href="https://www.bjultrasonic.com/how-do-ultrasonic-sensors-work/">How Do Ultrasonic Sensors Work</a></sub></p>
+  <img src="Images/How_Ultrasonic_Works.png" alt="Ultrasonic sensor timing and wave diagram showing Start Pulse, Chirp, Echo, and Echo Time Pulse" width="750" />
+</p> <p align="center"><sub>Source: Beijing Ultrasonic, <a href="https://www.bjultrasonic.com/how-do-ultrasonic-sensors-work/">How Do Ultrasonic Sensors Work</a></sub></p>
 
 When the Pico sends a short **Start Pulse** (`TRIG`), the sensor emits an ultrasonic burst (**Chirp**) that travels through the air, bounces off an obstacle, and returns as an **Echo** to the receiver.
 
