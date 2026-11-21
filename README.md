@@ -40,7 +40,7 @@ where $t$ is the **Echo Time Pulse** duration in microseconds ($\mu\text{s}$) me
 - **STOP:** a big `STOP` over the middle of the screen when the saved STOP distance is reached.
 
 
-<p align="center"><img src="Images/display_screens.png" alt="Display screens: normal operation, STOP distance reached, rear collision warning" width="70%" /></p>
+<p align="center"><img src="Images/display_screens.png" alt="Display screens: normal operation, STOP distance reached, rear collision warning" width="85%" /></p>
 
 ### Buzzer
 
