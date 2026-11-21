@@ -92,7 +92,9 @@ A normal parking approach (slower than 40 cm/s) does not trigger the warning. Wh
 | [Nokia 5110 LCD, SPI](https://cdn.sparkfun.com/assets/b/1/b/e/f/Nokia5110.pdf) | 1 | 84 × 48 px display |
 | [HW-508 passive buzzer](https://www.datasheethub.com/datasheets/others/hw-508-small-passive-buzzer-module-datasheet.pdf) | 1 | Sound warning, tone set by PWM |
 | [Push button](Images/Push_Button.png) | 1 | Mute, STOP distance setting |
-| Resistors 1 kΩ + 2 kΩ | 2 + 2 | ECHO voltage dividers |
+| Red LED, 5 mm | 2 | Hazard lights of the rear collision warning |
+| Resistor 1 kΩ | 4 | 2× ECHO voltage divider, 2× LED current limiting |
+| Resistor 2 kΩ | 2 | ECHO voltage divider |
 
 
 **Sensor supply:** Our HC-SR04 modules are the original 5 V version and do not work reliably on 3.3 V, so they are powered from VBUS (5 V, available when the Pico is powered over USB). The ECHO output then also has 5 V, while the Pico pins accept max. 3.3 V. Each ECHO is therefore connected through a voltage divider: 1 kΩ between ECHO and the GPIO pin, 2 kΩ between the GPIO pin and GND, which gives 5 V · 2/3 ≈ 3.3 V. TRIG is connected directly. The divider was verified on real hardware.
