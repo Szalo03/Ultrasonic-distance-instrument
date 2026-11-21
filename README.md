@@ -35,7 +35,7 @@ where $t$ is the **Echo Time Pulse** duration in microseconds ($\mu\text{s}$) me
 ### Display
 
 - **Top:** distance in cm from the left and the right sensor (`---` when there is no valid echo).
-- **Middle:** a distance indicator above each half of the bumper, like in a car. Five bars per side, the nearest one at the bumper is the smallest. The bar for the obstacle's current distance zone is drawn bold, the others are thin lines. Above 100 cm no bar is bold.
+- **Middle:** a distance indicator above each half of the bumper, like in a car. Five bars per side, the nearest one at the bumper is the smallest. The bar for the obstacle's current distance zone is drawn bold, the others are thin lines. The zones from the bumper up are ≤ 8, 9–20, 21–40, 41–65 and 66–100 cm; above 100 cm no bar is bold.
 - **Bottom:** the rear bumper with tail lights, seen from above; `MUTE` is shown in it when the buzzer is muted.
 - **STOP:** a big `STOP` over the middle of the screen when the saved STOP distance is reached.
 
