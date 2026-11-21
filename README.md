@@ -162,6 +162,20 @@ The files in [`src/`](src/) are saved on the Pico. [`main.py`](src/main.py) star
 Only built-in MicroPython modules are used: `machine`, `time`, `framebuf`, `uasyncio`, `json`, `micropython`.
 
 
+### Tests
+
+Each component has its own test in [`tests/`](tests/), run from Thonny with the class files saved on the Pico. The expected result is described at the top of each file.
+
+| Test | Tests |
+|---|---|
+| [`test_ultrasonic.py`](tests/test_ultrasonic.py) | Both sensors, raw and filtered distance |
+| [`test_display.py`](tests/test_display.py) | Display text and drawing |
+| [`test_buzzer.py`](tests/test_buzzer.py) | Tones and beeping in all distance zones |
+| [`test_button.py`](tests/test_button.py) | Short / long press, debounce |
+| [`test_led.py`](tests/test_led.py) | Hazard LEDs on, off, blinking |
+| [`test_collision.py`](tests/test_collision.py) | Approach speed and warning levels with the left sensor |
+| [`prototype.py`](tests/prototype.py) | First prototype from week 2 (all in one file) |
+
 ---
 
 ## Timing plan
