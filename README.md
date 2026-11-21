@@ -151,7 +151,7 @@ The files in [`src/`](src/) are saved on the Pico. [`main.py`](src/main.py) star
 | [`main.py`](src/main.py) | – | Creates all components, runs the uasyncio tasks, application modes and drawing |
 | [`nokia5110.py`](src/nokia5110.py) | `PCD8544` | Display driver based on `framebuf`, enlarged text |
 | [`ultrasonic.py`](src/ultrasonic.py) | `UltrasonicSensor` | TRIG pulse, ECHO time by a pin interrupt, median filter, distance in cm |
-| [`buzzer.py`](src/buzzer.py) | `Buzzer` | Distance zones, PWM tone, beeping, continuous tone at STOP, mute |
+| [`buzzer.py`](src/buzzer.py) | `Buzzer` | PWM tone, pause between beeps by distance, continuous tone at STOP, mute; zones for the display bars |
 | [`button.py`](src/button.py) | `Button` | Debounce, short / long press |
 | [`led.py`](src/led.py) | `Led` | Hazard LEDs |
 | [`collision.py`](src/collision.py) | `CollisionWarning` | Approach speed, time to collision, warning levels (logic only, no hardware) |
