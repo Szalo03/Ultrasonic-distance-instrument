@@ -39,6 +39,9 @@ where $t$ is the **Echo Time Pulse** duration in microseconds ($\mu\text{s}$) me
 - **Bottom:** the rear bumper with tail lights, seen from above; `MUTE` is shown in it when the buzzer is muted.
 - **STOP:** a big `STOP` over the middle of the screen when the saved STOP distance is reached.
 
+
+<p align="center"><img src="Images/display_screens.png" alt="Display screens: normal operation, STOP distance reached, rear collision warning" width="100%" /></p>
+
 ### Buzzer
 
 Like in a car, the tone (440 Hz) and the length of one beep (70 ms) stay the same, only the pause between beeps changes. It gets shorter smoothly with the distance, without steps:
