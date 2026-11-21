@@ -4,7 +4,7 @@ Contains the distance zones (ZONES), the zone_of() function shared with the
 display bars, and the Buzzer class: parking-sensor style beeping, continuous
 tone at the STOP distance and mute.
 
-Author:  Marek Gláser
+Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
          https://github.com/Szalo03/Ultrasonic-distance-instrument
 """

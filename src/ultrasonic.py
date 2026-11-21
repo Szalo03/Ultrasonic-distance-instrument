@@ -3,7 +3,7 @@
 Contains the UltrasonicSensor class: TRIG pulse, non-blocking measurement
 of the ECHO pulse by a pin interrupt and a median filter of the distance.
 
-Author:  Marek Gláser
+Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
          https://github.com/Szalo03/Ultrasonic-distance-instrument
 """

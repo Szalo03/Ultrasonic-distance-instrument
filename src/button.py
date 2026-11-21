@@ -3,7 +3,7 @@
 Contains the Button class. In the application a short press mutes the
 buzzer and a long press opens the STOP distance setting.
 
-Author:  Marek Gláser
+Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
          https://github.com/Szalo03/Ultrasonic-distance-instrument
 """

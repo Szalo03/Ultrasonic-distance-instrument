@@ -3,8 +3,7 @@
 Contains the PCD8544 class: SPI communication with the display, drawing
 through framebuf and enlarged text (big_text) for STOP / CRASH messages.
 
-Authors: Marek Šádek (original class in tests/prototype.py),
-         Marek Gláser (documentation, big_text)
+Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
          https://github.com/Szalo03/Ultrasonic-distance-instrument
 """

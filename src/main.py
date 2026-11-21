@@ -30,7 +30,7 @@ Rear collision warning (in NORMAL mode, see collision.py):
 - CRASH:   the obstacle reached the bumper - "CRASH" and CRASH_TEXT are
            shown for 5 s (any button press confirms it), LEDs keep blinking
 
-Author:  Marek Gláser
+Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
          https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
