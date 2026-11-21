@@ -1,18 +1,18 @@
 """test_buzzer.py - test of the passive buzzer.
 
-Expected result (about 15 s in total), the Thonny shell shows each step:
+Expected result (about 16 s in total), the Thonny shell shows each step:
 
-1. Four tones, each 0.4 s, getting higher: 350, 500, 750, 1000 Hz.
-2. 1 s silence.
-3. Beeping for simulated distances, each for 2 s. The sound changes in
-   steps (zones), inside one zone it stays the same:
+1. The tone (440 Hz) for 1 s, then 1 s silence.
+2. Beeping for simulated distances, each for 2 s. The tone and the beep
+   length stay the same, only the pause gets shorter smoothly:
    - 120 cm: silent (above 100 cm)
-   - 90 cm:  slow beeping, 500 Hz        (zone 71-100 cm)
-   - 60 cm:  faster, 550 Hz              (zone 51-70 cm)
-   - 45 cm:  faster, 600 Hz              (zone 36-50 cm)
-   - 30 cm:  fast beeping, 650 Hz        (zone 26-35 cm)
-   - 20 cm:  continuous tone, 700 Hz     (25 cm and closer)
-4. Silence at the end.
+   - 100 cm: slow beeping, pause 800 ms
+   - 70 cm:  pause about 570 ms
+   - 40 cm:  pause about 340 ms
+   - 20 cm:  pause about 190 ms
+   - 10 cm:  fast beeping, pause about 115 ms
+   - 6 cm:   continuous tone (8 cm and closer)
+3. Silence at the end, the shell prints "done".
 
 Run it from Thonny; the class files from src/ must be saved on the Pico.
 
@@ -26,19 +26,18 @@ from buzzer import Buzzer
 bz = Buzzer(14)    # S = GP14
 
 # 1. tone check
-for f in (350, 500, 750, 1000):
-    print("tone", f, "Hz")
-    bz.tone(f)
-    time.sleep_ms(400)
+print("tone", bz.TONE_HZ, "Hz")
+bz.tone(bz.TONE_HZ)
+time.sleep(1)
 bz.off()
-time.sleep(1)      # 2. silence
+time.sleep(1)
 
-# 3. beeping as in the parking sensor
-for d in (120, 90, 60, 45, 30, 20):
-    print("distance", d, "cm")
+# 2. beeping as in the parking sensor
+for d in (120, 100, 70, 40, 20, 10, 6):
+    print("distance", d, "cm, pause", bz.pause_ms(d), "ms")
     t0 = time.ticks_ms()
     while time.ticks_diff(time.ticks_ms(), t0) < 2000:
-        bz.update(d)       # picks the zone: silent / beeping / continuous tone
+        bz.update(d)       # silent / beeping / continuous tone
         time.sleep_ms(20)
-bz.off()           # 4. silence
+bz.off()           # 3. silence
 print("done")
