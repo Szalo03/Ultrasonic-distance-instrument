@@ -1,6 +1,6 @@
 # Ultrasonic Parking Sensor
 
-A parking sensor model built on a **Raspberry Pi Pico W** in **MicroPython**. Two ultrasonic sensors measure the distance to an obstacle on the left and right side, a Nokia 5110 display shows the distance, and a passive buzzer beeps faster as the obstacle gets closer.
+A rear parking sensor model built on a **Raspberry Pi Pico W** in **MicroPython**. Two ultrasonic sensors on the rear bumper measure the distance to an obstacle on the left and right side. A Nokia 5110 display shows both distances and a car-style distance indicator, and a passive buzzer beeps faster as the obstacle gets closer. A simplified **rear collision warning** detects an obstacle approaching fast from behind and warns with red hazard LEDs, a message on the display and an alarm sound.
 
 ---
 
