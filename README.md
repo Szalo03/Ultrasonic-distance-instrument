@@ -25,6 +25,7 @@ Two HC-SR04 sensors are mounted side by side on the rear bumper. They are trigge
 </p>
 <p align="center"><sub>Source: Beijing Ultrasonic, <a href="https://www.bjultrasonic.com/how-do-ultrasonic-sensors-work/">How Do Ultrasonic Sensors Work</a></sub></p>
 
+
 When the Pico sends a short **Start Pulse** (`TRIG`), the sensor emits an ultrasonic burst (**Chirp**) that travels through the air, bounces off an obstacle, and returns as an **Echo** to the receiver.
 
 At the same time, the sensor outputs an **Echo Time Pulse** (`ECHO`) whose HIGH duration $t$ equals the total travel time of the sound wave from emission to reception. Since the wave travels to the obstacle and back (twice the distance), the Pico calculates the one-way distance $d$ using the speed of sound in air ($v \approx 343\text{ m/s}$, or $0.0343\text{ cm/}\mu\text{s}$):
