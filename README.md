@@ -197,7 +197,7 @@ The program runs five `uasyncio` tasks, so a slow display update does not delay 
 
 **Week 1** – Topic chosen, components selected, functionality and button control designed, pin assignment and timing plan drafted.
 
-**Week 2** – First prototype tested on real hardware ([`tests/prototype.py`](tests/prototype.py)): one HC-SR04 sensor with the ECHO voltage divider, Nokia 5110 display, buzzer and button. The display showed the measured distance, the buzzer beeped faster as the obstacle got closer and the button muted the buzzer. Wiring diagram, schematic and planned software structure added.
+**Week 2** – First prototype tested on real hardware ([`tests/prototype.py`](tests/prototype.py)): one HC-SR04 sensor with the ECHO voltage divider, Nokia 5110 display, buzzer and button. The display showed the measured distance, the buzzer beeped faster as the obstacle got closer and the button muted the buzzer. Schematic and planned software structure added.
 
 <p align="center"><img src="Images/week2_prototype.jpg" alt="Week 2 prototype" width="350" /></p>
 
