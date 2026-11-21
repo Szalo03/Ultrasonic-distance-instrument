@@ -180,16 +180,16 @@ Each component has its own test in [`tests/`](tests/), run from Thonny with the 
 
 ## Timing plan
 
-The program uses `uasyncio` tasks, so a slow display update does not delay the measurement.
+The program runs five `uasyncio` tasks, so a slow display update does not delay the measurement. The interrupt handler only stores the time of the ECHO edges, all calculations run in the tasks.
 
-| Task | Interval |
-|---|---|
-| Distance measurement | every 60 ms, sensors alternate (each side ≈ every 120 ms) |
-| Button check | every 20–50 ms |
-| Display update | every 100–250 ms |
-| Buzzer | beep interval set by the distance |
-
-The ECHO pulse is measured with a pin interrupt that only stores the time of the rising and falling edge. The distance is then calculated in the measurement task.
+| Task | Interval | Responsibility |
+|---|---|---|
+| ECHO interrupt | on each edge | Stores the time of the rising and falling edge |
+| `measure_task` | 60 ms, sensors alternate (each side every 120 ms) | Trigger a sensor, compute and filter the distance, update the collision warning |
+| `button_task` | 20 ms | Read the button, switch the modes |
+| `buzzer_task` | 20 ms | Beeping by distance zone, STOP tone, collision alarm |
+| `light_task` | 50 ms | Hazard LEDs and display backlight blinking |
+| `display_task` | 150 ms | Redraw the screen |
 
 ---
 
