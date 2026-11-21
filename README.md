@@ -123,7 +123,7 @@ A normal parking approach (slower than 40 cm/s) does not trigger the warning. Wh
 
 ## Pin assignment
 
-All signal wires use the **Digital** header on the left side of the Gravity board (each row has signal / 3V3 / GND). Only the sensor supply comes from the VBUS pin.
+All signal wires use the **Digital** header on the left side of the Gravity board (each row has signal / 3V3 / GND), the hazard LEDs use the **Analog** header (GP26). Only the sensor supply comes from the VBUS pin.
 
 | Device | Signal | GPIO | Pico pin | Supply |
 |---|---|---|---|---|
@@ -139,8 +139,9 @@ All signal wires use the **Digital** header on the left side of the Gravity boar
 | | ECHO (via divider) | GP13 | 17 | |
 | Buzzer | S (PWM) | GP14 | 19 | + → 3V3, − → GND |
 | Button | to GND, internal pull-up | GP15 | 20 | |
+| Hazard LEDs (2×) | anode via 330 Ω (active high) | GP26 | 31 | cathode → GND |
 
-GP16 (SPI0 MISO) is not used, because the display only receives data.
+GP16 (SPI0 MISO) is not used, because the display only receives data. The SPI driver still assigns it to SPI0, so the LEDs use GP26.
 
 ---
 
