@@ -99,6 +99,7 @@ A normal parking approach (slower than 40 cm/s) does not trigger the warning. Wh
 
 **Sensor supply:** Our HC-SR04 modules are the original 5 V version and do not work reliably on 3.3 V, so they are powered from VBUS (5 V, available when the Pico is powered over USB). The ECHO output then also has 5 V, while the Pico pins accept max. 3.3 V. Each ECHO is therefore connected through a voltage divider: 1 kΩ between ECHO and the GPIO pin, 2 kΩ between the GPIO pin and GND, which gives 5 V · 2/3 ≈ 3.3 V. TRIG is connected directly. The divider was verified on real hardware.
 
+**Hazard LEDs:** both red LEDs are driven by one pin (GP26) in the active-high configuration: the anode is connected to the GPIO through the resistor and the cathode to GND, so the LEDs light when the pin is `1`. Each LED has its own 330 Ω series resistor, which limits the current to about (3.3 V − 2.0 V) / 330 Ω ≈ 4 mA per LED.
 
 <details>
 <summary>Component pinouts</summary>
