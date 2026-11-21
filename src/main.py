@@ -226,8 +226,8 @@ def draw_normal():
         lcd.text("PREPARE", 14, 12, 0 if inv else 1)
         lcd.text("FOR CRASH", 6, 21, 0 if inv else 1)
     elif stop_reached():
-        lcd.fill_rect(8, 10, 68, 21, 0)             # clear space under the text
-        lcd.rect(8, 10, 68, 21, 1)
+        lcd.fill_rect(4, 10, 76, 21, 0)             # clear space under the text
+        lcd.rect(4, 10, 76, 21, 1)
         lcd.big_text("STOP", 10, 13)
 
 
