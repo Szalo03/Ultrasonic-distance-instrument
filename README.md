@@ -145,16 +145,21 @@ GP16 (SPI0 MISO) is not used, because the display only receives data. The SPI dr
 
 ---
 
-## Planned software structure
+## Software structure
+
+The files in [`src/`](src/) are saved on the Pico. [`main.py`](src/main.py) starts automatically after power-on.
 
 | File | Class | Purpose |
 |---|---|---|
-| `main.py` | – | Starts the uasyncio tasks and connects all components |
-| `nokia5110.py` | `PCD8544` | Display driver (already working in `tests/prototype.py`) |
-| `ultrasonic.py` | `UltrasonicSensor` | Trigger, echo time, distance in cm |
-| `buzzer.py` | `Buzzer` | PWM tone, beeping by distance, mute |
-| `button.py` | `Button` | Debounce, short / long press |
+| [`main.py`](src/main.py) | – | Creates all components, runs the uasyncio tasks, application modes and drawing |
+| [`nokia5110.py`](src/nokia5110.py) | `PCD8544` | Display driver based on `framebuf`, enlarged text |
+| [`ultrasonic.py`](src/ultrasonic.py) | `UltrasonicSensor` | TRIG pulse, ECHO time by a pin interrupt, median filter, distance in cm |
+| [`buzzer.py`](src/buzzer.py) | `Buzzer` | Distance zones, PWM tone, beeping, continuous tone at STOP, mute |
+| [`button.py`](src/button.py) | `Button` | Debounce, short / long press |
+| [`led.py`](src/led.py) | `Led` | Hazard LEDs |
+| [`collision.py`](src/collision.py) | `CollisionWarning` | Approach speed, time to collision, warning levels (logic only, no hardware) |
 
+Only built-in MicroPython modules are used: `machine`, `time`, `framebuf`, `uasyncio`, `json`, `micropython`.
 
 
 ---
