@@ -41,18 +41,15 @@ where $t$ is the **Echo Time Pulse** duration in microseconds ($\mu\text{s}$) me
 
 ### Buzzer
 
-The sound follows distance zones, like a car parking sensor. Inside one zone the sound does not change, at the next zone the pause gets a little shorter and the tone a little higher. The beep itself is always 70 ms long.
+Like in a car, the tone (440 Hz) and the length of one beep (70 ms) stay the same, only the pause between beeps changes. It gets shorter smoothly with the distance, without steps:
 
-| Distance | Pause between beeps | Tone |
-|---|---|---|
-| above 100 cm | silent | – |
-| 66–100 cm | 380 ms | 480 Hz |
-| 41–65 cm | 260 ms | 500 Hz |
-| 21–40 cm | 160 ms | 520 Hz |
-| 9–20 cm | 90 ms | 540 Hz |
-| 8 cm and closer | continuous tone | 560 Hz |
+| Distance | Sound |
+|---|---|
+| above 100 cm | silent |
+| 100 cm → 9 cm | beeping, the pause goes linearly from 800 ms down to about 100 ms |
+| 8 cm and closer | continuous tone |
 
-The zone border has a 2 cm hysteresis, so the sound does not flicker when the obstacle stays right at a border. When the saved STOP distance is reached, the buzzer plays a continuous tone regardless of the zone. The zones also control the bars on the display.
+Both borders (100 cm and 8 cm) have a 2 cm hysteresis, so the sound does not switch back and forth when the obstacle stays right at a border. When the saved STOP distance is reached, the buzzer plays a continuous tone even if the obstacle is farther than 8 cm.
 
 ### Button
 
