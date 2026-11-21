@@ -167,7 +167,7 @@ Each component has its own test in [`tests/`](tests/), run from Thonny with the 
 |---|---|
 | [`test_ultrasonic.py`](tests/test_ultrasonic.py) | Both sensors, raw and filtered distance |
 | [`test_display.py`](tests/test_display.py) | Display text and drawing |
-| [`test_buzzer.py`](tests/test_buzzer.py) | Tones and beeping in all distance zones |
+| [`test_buzzer.py`](tests/test_buzzer.py) | Tone and beeping at several distances |
 | [`test_button.py`](tests/test_button.py) | Short / long press, debounce |
 | [`test_led.py`](tests/test_led.py) | Hazard LEDs on, off, blinking |
 | [`test_collision.py`](tests/test_collision.py) | Approach speed and warning levels with the left sensor |
