@@ -209,6 +209,6 @@ The program runs five `uasyncio` tasks, so a slow display update does not delay 
 - After stopping the program in Thonny, the display kept showing the last screen. The display and the buzzer are now switched off when the program ends.
 - The first beeping used high tones that changed in steps, which sounded unnatural. Now the tone is constant (440 Hz) and only the pause between beeps changes smoothly, like in a car.
 
-*Improvements over the prototype:* the distance is filtered by a median of the last 3 readings, and a 2 cm hysteresis keeps the bars and the sound from flickering at a zone border.
+*Improvements over the prototype:* the distance is filtered by a median of the last 3 readings, and a 2 cm hysteresis keeps the bars and the sound from flickering at a border.
 
 <p align="center"><img src="Images/week3_display.jpg" alt="Week 3 first display layout" width="350" /></p>
