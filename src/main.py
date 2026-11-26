@@ -75,7 +75,8 @@ button = Button(BUTTON_PIN)
 
 spi = SPI(0, baudrate=3_200_000, polarity=0, phase=0,
           sck=Pin(LCD_SCK), mosi=Pin(LCD_DIN))
-lcd = PCD8544(spi, Pin(LCD_CE, Pin.OUT), Pin(LCD_DC, Pin.OUT), Pin(LCD_RST, Pin.OUT))
+lcd = PCD8544(spi, Pin(LCD_CE, Pin.OUT), Pin(LCD_DC, Pin.OUT), Pin(LCD_RST, Pin.OUT),
+              flip_text=True)   # display mounted upside down: text rotated 180 deg
 backlight = Pin(LCD_LIGHT, Pin.OUT, value=0)   # active low: 0 = on
 hazard = Led(HAZARD_PIN)
 collision = (CollisionWarning(), CollisionWarning())   # left, right
@@ -151,6 +152,18 @@ def blink(period_ms):
     return (time.ticks_ms() // period_ms) % 2 == 0
 
 
+def fy(y, h=8, top=0, bottom=48):
+    """Y position of a text line.
+
+    With rotated text (lcd.flip_text) the lines of a text block between
+    ``top`` and ``bottom`` are mirrored, so that they read in the right order
+    when the display is turned upside down. ``h`` is the text height.
+    """
+    if lcd.flip_text:
+        return top + bottom - y - h
+    return y
+
+
 def num_text(cm):
     """Distance as a whole number, or '---' when there is no data."""
     if cm is None:
@@ -217,14 +230,14 @@ def draw_normal():
     draw_bars(1, right.distance)
     draw_bumper()
     if buzzer.muted:
-        lcd.text("MUTE", 26, 41, 1)
+        lcd.text("MUTE", 26, 40 if lcd.flip_text else 41, 1)  # rotated glyph sits 1 px lower
     if warning_level() == DANGER:
         # blinking inverted box, more important than STOP
         inv = blink(BLINK_MS)
         lcd.fill_rect(4, 10, 76, 21, 1 if inv else 0)
         lcd.rect(4, 10, 76, 21, 1)
-        lcd.text("PREPARE", 14, 12, 0 if inv else 1)
-        lcd.text("FOR CRASH", 6, 21, 0 if inv else 1)
+        lcd.text("PREPARE", 14, fy(12, 8, 10, 31), 0 if inv else 1)
+        lcd.text("FOR CRASH", 6, fy(21, 8, 10, 31), 0 if inv else 1)
     elif stop_reached():
         lcd.fill_rect(4, 10, 76, 21, 0)             # clear space under the text
         lcd.rect(4, 10, 76, 21, 1)
@@ -233,31 +246,31 @@ def draw_normal():
 
 def draw_crash():
     if blink(BLINK_MS):
-        lcd.big_text("CRASH", 2, 6)
-    lcd.text(CRASH_TEXT, 42 - 4 * len(CRASH_TEXT), 30, 1)   # centred
+        lcd.big_text("CRASH", 2, fy(6, 16))
+    lcd.text(CRASH_TEXT, 42 - 4 * len(CRASH_TEXT), fy(30), 1)   # centred
 
 
 def draw_set():
-    lcd.text("SET STOP", 10, 0, 1)
+    lcd.text("SET STOP", 10, fy(0), 1)
     d = closest(left.distance, right.distance)
     if blink_on():
         t = num_text(d) + ("cm" if d is not None else "")
-        lcd.big_text(t, 42 - 8 * len(t), 12)        # centred, 16 px high
-    lcd.text("hold:save", 6, 32, 1)
+        lcd.big_text(t, 42 - 8 * len(t), fy(12, 16))  # centred, 16 px high
+    lcd.text("hold:save", 6, fy(32), 1)
     if stop_cm is not None:
-        lcd.text("click:del", 6, 40, 1)
+        lcd.text("click:del", 6, fy(40), 1)
     else:
-        lcd.text("click:back", 2, 40, 1)
+        lcd.text("click:back", 2, fy(40), 1)
 
 
 def draw_message():
     if message == "SAVED":
-        lcd.big_text("SAVED", 2, 8)
+        lcd.big_text("SAVED", 2, fy(8, 16))
         t = num_text(stop_cm) + "cm"
     else:
-        lcd.big_text("STOP", 10, 8)
+        lcd.big_text("STOP", 10, fy(8, 16))
         t = "deleted"
-    lcd.text(t, 42 - 4 * len(t), 32, 1)             # centred
+    lcd.text(t, 42 - 4 * len(t), fy(32), 1)         # centred
 
 
 # ---------- tasks ----------
@@ -353,8 +366,8 @@ async def display_task():
 
 async def main():
     lcd.clear()
-    lcd.big_text("PARK", 10, 8)
-    lcd.text("sensor", 18, 32, 1)
+    lcd.big_text("PARK", 10, fy(8, 16))
+    lcd.text("sensor", 18, fy(32), 1)
     lcd.show()
     await asyncio.sleep_ms(1_500)
     asyncio.create_task(measure_task())
