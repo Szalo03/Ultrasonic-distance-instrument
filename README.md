@@ -36,11 +36,14 @@ where $t$ is the **Echo Time Pulse** duration in microseconds ($\mu\text{s}$) me
 
 ### Display
 
-- **Top:** distance in cm from the left and the right sensor (`---` when there is no valid echo).
-- **Middle:** a distance indicator above each half of the bumper, like in a car. Five bars per side, the nearest one at the bumper is the smallest. The bar for the obstacle's current distance zone is drawn bold, the others are thin lines. The zones from the bumper up are ≤ 8, 9–20, 21–40, 41–65 and 66–100 cm; above 100 cm no bar is bold.
-- **Bottom:** the rear bumper with tail lights, seen from above; `MUTE` is shown in it when the buzzer is muted.
+The display is mounted upside down in the model, so all text is drawn rotated by 180° (`flip_text` in [`nokia5110.py`](src/nokia5110.py)); the graphics are drawn normally. As seen on the mounted display:
+
+- **Top:** the rear bumper with tail lights, seen from above; `MUTE` is shown in it when the buzzer is muted.
+- **Middle:** a distance indicator below each half of the bumper, like in a car. Five bars per side, the one nearest to the bumper is the smallest. The bar for the obstacle's current distance zone is drawn bold, the others are thin lines. The zones from the bumper are ≤ 8, 9–20, 21–40, 41–65 and 66–100 cm; above 100 cm no bar is bold.
+- **Bottom:** the distance in cm measured by each sensor, on the side of its bars (`---` when there is no valid echo).
 - **STOP:** a big `STOP` over the middle of the screen when the saved STOP distance is reached.
 
+The backlight is on all the time.
 
 <p align="center"><img src="Images/display_screens.png" alt="Display screens: normal operation, STOP distance reached, rear collision warning" width="95%" /></p>
 
