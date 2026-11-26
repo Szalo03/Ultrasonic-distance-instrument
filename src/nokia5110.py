@@ -1,7 +1,8 @@
 """nokia5110.py - driver for the Nokia 5110 (PCD8544) display.
 
 Contains the PCD8544 class: SPI communication with the display, drawing
-through framebuf and enlarged text (big_text) for STOP / CRASH messages.
+through framebuf, enlarged text (big_text) for STOP / CRASH messages and
+optional 180 degree rotation of all text (flip_text).
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
@@ -23,17 +24,21 @@ class PCD8544(framebuf.FrameBuffer):
     :param dc: data / command pin, ``machine.Pin`` output
     :param rst: reset pin, ``machine.Pin`` output
     :param contrast: contrast value 0x80-0xFF
+    :param flip_text: True = all text (:meth:`text`, :meth:`big_text`) is
+        drawn rotated by 180 degrees in its place, the graphics are not
+        changed; used when the display is mounted upside down
     """
 
     WIDTH = 84
     HEIGHT = 48
 
-    def __init__(self, spi, cs, dc, rst, contrast=0xBF):
+    def __init__(self, spi, cs, dc, rst, contrast=0xBF, flip_text=False):
         self.spi = spi
         self.cs = cs
         self.dc = dc
         self.rst = rst
         self.contrast = contrast
+        self.flip_text = flip_text
         self.buffer = bytearray((self.HEIGHT // 8) * self.WIDTH)
         super().__init__(self.buffer, self.WIDTH, self.HEIGHT, framebuf.MONO_VLSB)
         self.cs.value(1)
@@ -64,8 +69,39 @@ class PCD8544(framebuf.FrameBuffer):
         """Clear the frame buffer (call :meth:`show` to apply)."""
         self.fill(0)
 
+    def _draw_text(self, text, x, y, scale, c):
+        # draw the text into a small buffer and copy it pixel by pixel,
+        # enlarged and / or rotated by 180 degrees
+        w = 8 * len(text)
+        small = framebuf.FrameBuffer(bytearray(w), w, 8, framebuf.MONO_VLSB)
+        small.text(text, 0, 0, 1)
+        for sy in range(8):
+            for sx in range(w):
+                if small.pixel(sx, sy):
+                    if self.flip_text:
+                        dx, dy = w - 1 - sx, 7 - sy
+                    else:
+                        dx, dy = sx, sy
+                    if scale == 1:
+                        self.pixel(x + dx, y + dy, c)
+                    else:
+                        self.fill_rect(x + dx * scale, y + dy * scale, scale, scale, c)
+
+    def text(self, text, x, y, c=1):
+        """Draw text with the built-in 8 x 8 px font (rotated if flip_text).
+
+        :param text: string to draw
+        :param x: left edge in px
+        :param y: top edge in px
+        :param c: colour, 1 = black pixels
+        """
+        if self.flip_text:
+            self._draw_text(text, x, y, 1, c)
+        else:
+            framebuf.FrameBuffer.text(self, text, x, y, c)
+
     def big_text(self, text, x, y, scale=2, c=1):
-        """Draw text enlarged ``scale`` times (the built-in font is 8 x 8 px).
+        """Draw text enlarged ``scale`` times (rotated if flip_text).
 
         :param text: string to draw
         :param x: left edge in px
@@ -73,13 +109,7 @@ class PCD8544(framebuf.FrameBuffer):
         :param scale: enlargement factor, 2 = 16 x 16 px characters
         :param c: colour, 1 = black pixels
         """
-        w = 8 * len(text)
-        small = framebuf.FrameBuffer(bytearray(w), w, 8, framebuf.MONO_VLSB)
-        small.text(text, 0, 0, 1)
-        for sy in range(8):
-            for sx in range(w):
-                if small.pixel(sx, sy):
-                    self.fill_rect(x + sx * scale, y + sy * scale, scale, scale, c)
+        self._draw_text(text, x, y, scale, c)
 
     def show(self):
         """Send the whole frame buffer to the display."""
