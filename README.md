@@ -193,7 +193,7 @@ The program runs five `uasyncio` tasks, so a slow display update does not delay 
 | `measure_task` | 60 ms, sensors alternate (each side every 120 ms) | Trigger a sensor, compute and filter the distance, update the collision warning |
 | `button_task` | 20 ms | Read the button, switch the modes |
 | `buzzer_task` | 20 ms | Beeping by distance, STOP tone, collision alarm |
-| `light_task` | 50 ms | Hazard LEDs and display backlight blinking |
+| `light_task` | 50 ms | Hazard LEDs blinking |
 | `display_task` | 150 ms | Redraw the screen |
 
 ---
