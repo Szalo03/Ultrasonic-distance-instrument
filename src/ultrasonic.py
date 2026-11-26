@@ -4,8 +4,8 @@ Contains the UltrasonicSensor class: TRIG pulse, non-blocking measurement
 of the ECHO pulse by a pin interrupt and a median filter of the distance.
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 from machine import Pin
@@ -47,7 +47,10 @@ class UltrasonicSensor:
                       handler=self._on_echo, hard=True)
 
     def _on_echo(self, pin):
-        # interrupt handler: only record the edge time
+        """Interrupt handler for both ECHO edges: only stores the edge time.
+
+        :param pin: the ECHO pin that caused the interrupt
+        """
         now = time.ticks_us()
         if pin.value():
             self._rise_us = now
@@ -63,7 +66,11 @@ class UltrasonicSensor:
         self.trig.value(0)
 
     def raw_cm(self):
-        """Distance from the last measurement in cm, or ``None`` if invalid."""
+        """Distance from the last measurement, without filtering.
+
+        :returns: distance in cm, or ``None`` if there was no echo or it is
+            out of range (2-400 cm)
+        """
         if not self._done:
             return None
         cm = self._pulse_us * self.SOUND_CM_PER_US / 2
@@ -72,7 +79,12 @@ class UltrasonicSensor:
         return cm
 
     def update(self):
-        """Process the last measurement and update :attr:`distance`."""
+        """Process the last measurement and update :attr:`distance`.
+
+        Call it at least 40 ms after :meth:`trigger`.
+
+        :returns: filtered distance in cm, or ``None``
+        """
         cm = self.raw_cm()
         if cm is None:
             self._misses += 1

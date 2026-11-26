@@ -4,8 +4,8 @@ Contains the Led class, used for the two red hazard LEDs of the rear
 collision warning (both on GP26, active high).
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 from machine import Pin
 
@@ -30,7 +30,10 @@ class Led:
         self.pin.value(0)
 
     def set(self, state):
-        """Switch the LED on (True) or off (False)."""
+        """Switch the LED on or off.
+
+        :param state: True = on, False = off
+        """
         self.pin.value(1 if state else 0)
 
     def toggle(self):

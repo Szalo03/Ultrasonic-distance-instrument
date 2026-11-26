@@ -4,9 +4,12 @@ Contains the PCD8544 class: SPI communication with the display, drawing
 through framebuf, enlarged text (big_text) for STOP / CRASH messages and
 optional 180 degree rotation of all text (flip_text).
 
+The PCD8544 class is adapted from the MicroPython Nokia 5110 PCD8544 driver
+by Mike Causer, MIT License: https://github.com/mcauser/micropython-pcd8544
+
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 import framebuf
@@ -59,7 +62,10 @@ class PCD8544(framebuf.FrameBuffer):
         self.show()
 
     def command(self, data):
-        """Send one command byte."""
+        """Send one command byte to the controller.
+
+        :param data: command byte
+        """
         self.dc.value(0)
         self.cs.value(0)
         self.spi.write(bytearray([data]))
@@ -70,8 +76,15 @@ class PCD8544(framebuf.FrameBuffer):
         self.fill(0)
 
     def _draw_text(self, text, x, y, scale, c):
-        # draw the text into a small buffer and copy it pixel by pixel,
-        # enlarged and / or rotated by 180 degrees
+        """Draw text into a small buffer and copy it pixel by pixel,
+        enlarged and / or rotated by 180 degrees (if ``flip_text``).
+
+        :param text: string to draw
+        :param x: left edge in px
+        :param y: top edge in px
+        :param scale: enlargement factor (1 = normal 8 x 8 px font)
+        :param c: colour, 1 = black pixels
+        """
         w = 8 * len(text)
         small = framebuf.FrameBuffer(bytearray(w), w, 8, framebuf.MONO_VLSB)
         small.text(text, 0, 0, 1)

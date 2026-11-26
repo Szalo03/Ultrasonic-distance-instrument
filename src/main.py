@@ -11,9 +11,6 @@ Connects all components and runs them as uasyncio tasks:
 - display_task: display is redrawn every 150 ms
 - light_task:   hazard LEDs are updated every 50 ms
 
-After power-on the device waits in STANDBY: display off,
-buzzer and LEDs silent. A press of the button starts the application.
-
 Modes:
 
 - NORMAL:  distances, bars, beeping. Short press = mute, long press = SET.
@@ -34,8 +31,8 @@ Rear collision warning (in NORMAL mode, see collision.py):
            shown for 5 s (any button press confirms it), LEDs keep blinking
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import json
 import time
@@ -80,14 +77,17 @@ spi = SPI(0, baudrate=3_200_000, polarity=0, phase=0,
           sck=Pin(LCD_SCK), mosi=Pin(LCD_DIN))
 lcd = PCD8544(spi, Pin(LCD_CE, Pin.OUT), Pin(LCD_DC, Pin.OUT), Pin(LCD_RST, Pin.OUT),
               flip_text=True)   # display mounted upside down: text rotated 180 deg
-backlight = Pin(LCD_LIGHT, Pin.OUT, value=1)   # active low: 1 = off, not used
+backlight = Pin(LCD_LIGHT, Pin.OUT, value=0)   # active low: 0 = on, always on
 hazard = Led(HAZARD_PIN)
 collision = (CollisionWarning(), CollisionWarning())   # left, right
 
 
 # ---------- STOP distance in flash ----------
 def load_stop():
-    """Read the saved STOP distance, or None if nothing is saved."""
+    """Read the saved STOP distance from ``settings.json``.
+
+    :returns: STOP distance in cm, or ``None`` if nothing is saved
+    """
     try:
         with open(SETTINGS_FILE) as f:
             return json.load(f).get("stop_cm")
@@ -96,7 +96,10 @@ def load_stop():
 
 
 def save_stop(cm):
-    """Write the STOP distance to flash (None = no STOP distance)."""
+    """Write the STOP distance to ``settings.json`` in the Pico's flash.
+
+    :param cm: STOP distance in cm, or ``None`` to delete it
+    """
     try:
         with open(SETTINGS_FILE, "w") as f:
             json.dump({"stop_cm": cm}, f)
@@ -112,6 +115,11 @@ stop_cm = load_stop()
 
 
 def set_mode(new_mode, text=""):
+    """Switch the application mode and remember when it happened.
+
+    :param new_mode: ``MODE_NORMAL``, ``MODE_SET`` or ``MODE_MESSAGE``
+    :param text: message for ``MODE_MESSAGE`` ("SAVED" or "DELETED")
+    """
     global mode, mode_since, message
     mode = new_mode
     mode_since = time.ticks_ms()
@@ -119,17 +127,28 @@ def set_mode(new_mode, text=""):
 
 
 def in_mode_ms():
-    """Time spent in the current mode in ms."""
+    """Time spent in the current mode.
+
+    :returns: time in ms
+    """
     return time.ticks_diff(time.ticks_ms(), mode_since)
 
 
 def blink_on():
-    """True / False alternating every BLINK_MS."""
+    """Blink phase for blinking text.
+
+    :returns: True / False, alternating every ``BLINK_MS``
+    """
     return (time.ticks_ms() // BLINK_MS) % 2 == 0
 
 
 def closest(a, b):
-    """Smaller of two distances, ignoring None."""
+    """Smaller of two distances, ignoring ``None``.
+
+    :param a: distance in cm or ``None``
+    :param b: distance in cm or ``None``
+    :returns: the smaller distance, or ``None`` if both are ``None``
+    """
     if a is None:
         return b
     if b is None:
@@ -138,20 +157,32 @@ def closest(a, b):
 
 
 def stop_reached():
-    """True when the STOP distance is set and reached by one of the sensors."""
+    """Check the saved STOP distance.
+
+    :returns: True when a STOP distance is saved and one of the sensors
+        measures this distance or less
+    """
     d = closest(left.distance, right.distance)
     return stop_cm is not None and d is not None and d <= stop_cm
 
 
 def warning_level():
-    """Highest collision warning level of both sensors (only in NORMAL mode)."""
+    """Current rear collision warning level.
+
+    :returns: the higher level of both sensors (``NONE``, ``WARNING``,
+        ``DANGER`` or ``CRASH``); always ``NONE`` outside NORMAL mode
+    """
     if mode != MODE_NORMAL:
         return NONE
     return max(collision[0].level, collision[1].level)
 
 
 def blink(period_ms):
-    """True / False alternating every period_ms."""
+    """Blink phase with a given period.
+
+    :param period_ms: length of one phase in ms
+    :returns: True / False, alternating every ``period_ms``
+    """
     return (time.ticks_ms() // period_ms) % 2 == 0
 
 
@@ -160,7 +191,13 @@ def fy(y, h=8, top=0, bottom=48):
 
     With rotated text (lcd.flip_text) the lines of a text block between
     ``top`` and ``bottom`` are mirrored, so that they read in the right order
-    when the display is turned upside down. ``h`` is the text height.
+    when the display is turned upside down.
+
+    :param y: y position for normal (not rotated) text
+    :param h: text height in px (8 normal, 16 big text)
+    :param top: top edge of the text block
+    :param bottom: bottom edge of the text block
+    :returns: y position to draw the text at
     """
     if lcd.flip_text:
         return top + bottom - y - h
@@ -168,7 +205,11 @@ def fy(y, h=8, top=0, bottom=48):
 
 
 def num_text(cm):
-    """Distance as a whole number, or '---' when there is no data."""
+    """Distance as text for the display.
+
+    :param cm: distance in cm or ``None``
+    :returns: whole number as a string, or ``"---"`` when there is no data
+    """
     if cm is None:
         return "---"
     return str(int(cm + 0.5))
@@ -193,6 +234,7 @@ bar_zones = [SILENT, SILENT]       # zone of each side, for hysteresis
 
 
 def draw_bumper():
+    """Draw the rear bumper (2 px line), the car sides and the tail lights."""
     for dy in (0, 1):                               # 2 px thick line
         for (x0, y0), (x1, y1) in zip(BUMPER, BUMPER[1:]):
             lcd.line(x0, y0 + dy, x1, y1 + dy, 1)
@@ -204,11 +246,14 @@ def draw_bumper():
 
 
 def draw_bars(side, cm):
-    """Bars of one side (0 = left, 1 = right).
+    """Draw the five distance bars of one side.
 
     Only the bar at the obstacle's distance is filled: the bar nearest to the
-    bumper for zone 0 ... the top bar for zone 4. Above 100 cm no bar is
-    filled. The other bars are thin 1 px lines (if BAR_OUTLINES).
+    bumper for zone 0 ... the farthest bar for zone 4. Above 100 cm no bar is
+    filled. The other bars are thin 1 px lines (if ``BAR_OUTLINES``).
+
+    :param side: 0 = left sensor, 1 = right sensor
+    :param cm: distance in cm or ``None``
     """
     zone = SILENT
     if cm is not None:
@@ -224,6 +269,8 @@ def draw_bars(side, cm):
 
 
 def draw_normal():
+    """Draw the NORMAL screen: distances, bars, bumper, MUTE and the STOP or
+    PREPARE FOR CRASH box."""
     ltext = num_text(left.distance)
     rtext = num_text(right.distance)
     lcd.text(ltext, 0, 0, 1)
@@ -248,12 +295,14 @@ def draw_normal():
 
 
 def draw_crash():
+    """Draw the CRASH screen: blinking "CRASH" and ``CRASH_TEXT``."""
     if blink(BLINK_MS):
         lcd.big_text("CRASH", 2, fy(6, 16))
     lcd.text(CRASH_TEXT, 42 - 4 * len(CRASH_TEXT), fy(30), 1)   # centred
 
 
 def draw_set():
+    """Draw the STOP setting screen: blinking current distance and hints."""
     lcd.text("SET STOP", 10, fy(0), 1)
     d = closest(left.distance, right.distance)
     if blink_on():
@@ -267,6 +316,7 @@ def draw_set():
 
 
 def draw_message():
+    """Draw the "SAVED" (with the saved distance) or "STOP deleted" message."""
     if message == "SAVED":
         lcd.big_text("SAVED", 2, fy(8, 16))
         t = num_text(stop_cm) + "cm"
@@ -278,6 +328,12 @@ def draw_message():
 
 # ---------- tasks ----------
 async def measure_task():
+    """Coroutine: measure both sensors alternately.
+
+    Triggers one sensor, waits ``MEASURE_MS`` for the echo, updates its
+    filtered distance and its collision warning, then does the same with
+    the other sensor (each sensor every 2 x ``MEASURE_MS``).
+    """
     sensors = (left, right)
     i = 0
     while True:
@@ -290,6 +346,12 @@ async def measure_task():
 
 
 async def button_task():
+    """Coroutine: read the button every 20 ms and switch the modes.
+
+    NORMAL: short press = mute, long press = STOP setting. SET: long press
+    = save, short press = delete / back, timeout after ``SET_TIMEOUT_MS``.
+    MESSAGE: back to NORMAL after ``MESSAGE_MS``. CRASH: any press confirms.
+    """
     global stop_cm
     while True:
         event = button.update()
@@ -325,6 +387,12 @@ async def button_task():
 
 
 async def buzzer_task():
+    """Coroutine: update the buzzer every 20 ms.
+
+    Two-tone alarm in DANGER (also when muted), silent in CRASH, SET and
+    MESSAGE, otherwise beeping by the closer distance and continuous tone at
+    the STOP distance.
+    """
     while True:
         level = warning_level()
         if level == DANGER:
@@ -338,6 +406,11 @@ async def buzzer_task():
 
 
 async def light_task():
+    """Coroutine: update the hazard LEDs every 50 ms.
+
+    Slow blinking in WARNING and CRASH, fast blinking in DANGER, off
+    otherwise.
+    """
     while True:
         level = warning_level()
         if level == WARNING or level == CRASH:
@@ -350,6 +423,7 @@ async def light_task():
 
 
 async def display_task():
+    """Coroutine: redraw the screen for the current mode every 150 ms."""
     while True:
         lcd.clear()
         if warning_level() == CRASH:
@@ -364,16 +438,8 @@ async def display_task():
         await asyncio.sleep_ms(150)
 
 
-async def wait_for_start():
-    """STANDBY after power-on: everything off until the button is pressed."""
-    lcd.clear()
-    lcd.show()
-    while button.update() is None:                  # short or long press
-        await asyncio.sleep_ms(20)
-
-
 async def main():
-    await wait_for_start()
+    """Coroutine: show the start screen, then start all tasks and keep running."""
     lcd.clear()
     lcd.big_text("PARK", 10, fy(8, 16))
     lcd.text("sensor", 18, fy(32), 1)

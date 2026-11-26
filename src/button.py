@@ -4,8 +4,8 @@ Contains the Button class. In the application a short press mutes the
 buzzer and a long press opens the STOP distance setting.
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 from machine import Pin
@@ -37,11 +37,18 @@ class Button:
         self._long_sent = False
 
     def is_pressed(self):
-        """Debounced state: ``True`` while the button is held."""
+        """Debounced button state.
+
+        :returns: True while the button is held
+        """
         return self._stable == 0
 
     def update(self):
-        """Read the pin and return ``"short"``, ``"long"`` or ``None``."""
+        """Read the pin and detect a press.
+
+        :returns: ``"short"`` after a short press (on release), ``"long"``
+            once the button has been held for ``long_ms``, otherwise ``None``
+        """
         now = time.ticks_ms()
         raw = self.pin.value()
         if raw != self._raw:

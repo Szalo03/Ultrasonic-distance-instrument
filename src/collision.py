@@ -5,8 +5,8 @@ line fit, time to collision and the warning levels NONE / WARNING / DANGER /
 CRASH. Pure logic without hardware, so it can be tested on its own.
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 
@@ -25,7 +25,7 @@ class CollisionWarning:
       collision (distance / speed) is shorter than ``WARN_TTC_MS``
     - ``DANGER``:  still approaching fast and closer than ``DANGER_CM``
     - ``CRASH``:   in DANGER the obstacle got closer than ``CRASH_CM``
-      (or the sensor lost it right at the bumper)
+      (or the sensor lost it closer than ``LOST_NEAR_CM``)
 
     A jump bigger than ``MAX_STEP_CM`` between two readings starts the speed
     fit again, so an object put in front of the sensor from the side is not
@@ -59,6 +59,11 @@ class CollisionWarning:
         self._since = time.ticks_ms()
 
     def _fit_speed(self):
+        """Approach speed from the stored readings (least-squares line fit).
+
+        :returns: speed in cm/s, positive when the obstacle gets closer;
+            0 with fewer than 3 readings
+        """
         n = len(self._samples)
         if n < 3:
             return 0.0
@@ -74,7 +79,12 @@ class CollisionWarning:
         return -slope       # distance going down = positive approach speed
 
     def add(self, distance, now_ms=None):
-        """Add a new distance in cm (``None`` = no data). Returns the level."""
+        """Add a new reading and update the speed and the warning level.
+
+        :param distance: distance in cm, or ``None`` (no data)
+        :param now_ms: time of the reading in ms (default: ``ticks_ms()``)
+        :returns: the warning level ``NONE``, ``WARNING``, ``DANGER`` or ``CRASH``
+        """
         if now_ms is None:
             now_ms = time.ticks_ms()
         target = NONE
@@ -103,6 +113,11 @@ class CollisionWarning:
         return self.level
 
     def _set(self, target, now_ms):
+        """Change the level; a lower level only after the hold time.
+
+        :param target: level wanted by the current reading
+        :param now_ms: time of the reading in ms
+        """
         if target >= self.level:
             if target != NONE:
                 self._since = now_ms        # condition still active

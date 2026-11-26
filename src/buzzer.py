@@ -7,8 +7,8 @@ Also contains the distance zones (ZONES) and zone_of() used by the
 display bars.
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 from machine import Pin, PWM
@@ -76,7 +76,10 @@ class Buzzer:
         self._last_ms = time.ticks_ms()
 
     def tone(self, freq):
-        """Start a tone with the given frequency in Hz."""
+        """Start a tone.
+
+        :param freq: frequency in Hz
+        """
         if freq != self._freq:
             self.pwm.freq(freq)
             self._freq = freq
@@ -89,20 +92,32 @@ class Buzzer:
         self._on = False
 
     def toggle_mute(self):
-        """Switch mute on / off. Returns the new mute state."""
+        """Switch mute on / off.
+
+        :returns: the new mute state (True = muted)
+        """
         self.muted = not self.muted
         if self.muted:
             self.off()
         return self.muted
 
     def pause_ms(self, distance):
-        """Pause between beeps for ``distance`` in cm (linear)."""
+        """Pause between beeps for a distance (linear interpolation).
+
+        :param distance: distance in cm
+        :returns: pause in ms, from ``PAUSE_FAR_MS`` to ``PAUSE_NEAR_MS``
+        """
         span = self.START_CM - self.CONTINUOUS_CM
         part = (distance - self.CONTINUOUS_CM) / span      # 0 near ... 1 far
         part = min(max(part, 0.0), 1.0)
         return int(self.PAUSE_NEAR_MS + part * (self.PAUSE_FAR_MS - self.PAUSE_NEAR_MS))
 
     def _new_state(self, distance):
+        """Decide the sound state with hysteresis at both borders.
+
+        :param distance: distance in cm or ``None``
+        :returns: "silent", "beeping" or "continuous"
+        """
         if distance is None:
             return "silent"
         h = HYSTERESIS_CM
@@ -117,8 +132,9 @@ class Buzzer:
         return "beeping"
 
     def update(self, distance, stop=False):
-        """Set the sound according to ``distance`` in cm (``None`` = no data).
+        """Set the sound according to the distance.
 
+        :param distance: distance in cm, or ``None`` (no data = silent)
         :param stop: True when the STOP distance is reached - continuous tone
         """
         self.state = self._new_state(distance)
