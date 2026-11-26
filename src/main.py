@@ -9,7 +9,10 @@ Connects all components and runs them as uasyncio tasks:
 - button_task:  button is checked every 20 ms, switches the modes
 - buzzer_task:  buzzer is updated every 20 ms
 - display_task: display is redrawn every 150 ms
-- light_task:   hazard LEDs and display backlight are updated every 50 ms
+- light_task:   hazard LEDs are updated every 50 ms
+
+After power-on the device waits in STANDBY: display off,
+buzzer and LEDs silent. A press of the button starts the application.
 
 Modes:
 
@@ -25,8 +28,8 @@ plays a continuous tone. The STOP distance is stored in settings.json.
 Rear collision warning (in NORMAL mode, see collision.py):
 
 - WARNING: an obstacle approaches fast - the red hazard LEDs blink
-- DANGER:  still fast and close - "PREPARE FOR CRASH" blinks, LEDs and
-           backlight blink fast, alarm sound (also when muted)
+- DANGER:  still fast and close - "PREPARE FOR CRASH" blinks, LEDs blink
+           fast, alarm sound (also when muted)
 - CRASH:   the obstacle reached the bumper - "CRASH" and CRASH_TEXT are
            shown for 5 s (any button press confirms it), LEDs keep blinking
 
@@ -77,7 +80,7 @@ spi = SPI(0, baudrate=3_200_000, polarity=0, phase=0,
           sck=Pin(LCD_SCK), mosi=Pin(LCD_DIN))
 lcd = PCD8544(spi, Pin(LCD_CE, Pin.OUT), Pin(LCD_DC, Pin.OUT), Pin(LCD_RST, Pin.OUT),
               flip_text=True)   # display mounted upside down: text rotated 180 deg
-backlight = Pin(LCD_LIGHT, Pin.OUT, value=0)   # active low: 0 = on
+backlight = Pin(LCD_LIGHT, Pin.OUT, value=1)   # active low: 1 = off, not used
 hazard = Led(HAZARD_PIN)
 collision = (CollisionWarning(), CollisionWarning())   # left, right
 
@@ -339,13 +342,10 @@ async def light_task():
         level = warning_level()
         if level == WARNING or level == CRASH:
             hazard.set(blink(400))                  # like hazard lights
-            backlight.value(0)
         elif level == DANGER:
             hazard.set(blink(100))                  # fast
-            backlight.value(0 if blink(100) else 1)
         else:
             hazard.off()
-            backlight.value(0)                      # active low: on
         await asyncio.sleep_ms(50)
 
 
@@ -364,7 +364,16 @@ async def display_task():
         await asyncio.sleep_ms(150)
 
 
+async def wait_for_start():
+    """STANDBY after power-on: everything off until the button is pressed."""
+    lcd.clear()
+    lcd.show()
+    while button.update() is None:                  # short or long press
+        await asyncio.sleep_ms(20)
+
+
 async def main():
+    await wait_for_start()
     lcd.clear()
     lcd.big_text("PARK", 10, fy(8, 16))
     lcd.text("sensor", 18, fy(32), 1)
