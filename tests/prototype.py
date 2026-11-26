@@ -17,6 +17,8 @@ import framebuf
 
 # ==========================================
 # 1. NOKIA 5110 DISPLAY CLASS (PCD8544)
+# MicroPython Nokia 5110 PCD8544 84x48 LCD driver
+# https://github.com/mcauser/micropython-pcd8544
 # ==========================================
 class PCD8544(framebuf.FrameBuffer):
     def __init__(self, spi, cs, dc, rst):
