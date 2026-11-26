@@ -157,7 +157,7 @@ The files in [`src/`](src/) are saved on the Pico. [`main.py`](src/main.py) star
 | File | Class | Purpose |
 |---|---|---|
 | [`main.py`](src/main.py) | – | Creates all components, runs the uasyncio tasks, application modes and drawing |
-| [`nokia5110.py`](src/nokia5110.py) | `PCD8544` | Display driver based on `framebuf`, enlarged text |
+| [`nokia5110.py`](src/nokia5110.py) | `PCD8544` | Display driver based on `framebuf`, enlarged and 180° rotated text; adapted from [micropython-pcd8544](https://github.com/mcauser/micropython-pcd8544) by Mike Causer (MIT License) |
 | [`ultrasonic.py`](src/ultrasonic.py) | `UltrasonicSensor` | TRIG pulse, ECHO time by a pin interrupt, median filter, distance in cm |
 | [`buzzer.py`](src/buzzer.py) | `Buzzer` | PWM tone, pause between beeps by distance, continuous tone at STOP, mute; zones for the display bars |
 | [`button.py`](src/button.py) | `Button` | Debounce, short / long press |
