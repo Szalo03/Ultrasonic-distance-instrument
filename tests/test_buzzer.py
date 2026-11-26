@@ -17,8 +17,8 @@ Expected result (about 16 s in total), the Thonny shell shows each step:
 Run it from Thonny; the class files from src/ must be saved on the Pico.
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 from buzzer import Buzzer

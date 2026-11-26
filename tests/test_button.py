@@ -11,8 +11,8 @@ Expected result in the Thonny shell:
 Run it from Thonny; the class files from src/ must be saved on the Pico.
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
-Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
-         https://github.com/Szalo03/Ultrasonic-distance-instrument
+Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
+https://github.com/Szalo03/Ultrasonic-distance-instrument
 """
 import time
 from button import Button
