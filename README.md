@@ -206,7 +206,7 @@ The program runs five `uasyncio` tasks, so a slow display update does not delay 
 
 <p align="center"><img src="Images/week2_prototype.jpg" alt="Week 2 prototype" width="350" /></p>
 
-**Week 3** – Code split into reusable classes in [`src/`](src/) with a test for each component in [`tests/`](tests/); the tests of the sensors, display, buzzer and button passed on real hardware. Main program with `uasyncio` tasks tested on hardware: both sensors measured alternately, distances and bars on the display, beeping by distance, mute. Then added: STOP distance setting (save / delete, stored in flash), new car-style display layout, smooth beeping by distance and the rear collision warning with hazard LEDs (hardware testing in progress).
+**Week 3** – Code split into reusable classes in [`src/`](src/) with a test for each component in [`tests/`](tests/); the tests of the sensors, display, buzzer and button passed on real hardware. Main program with `uasyncio` tasks tested on hardware: both sensors measured alternately, distances and bars on the display, beeping by distance, mute. Then added: STOP distance setting (save / delete, stored in flash), new car-style display layout, smooth beeping by distance and the rear collision warning with hazard LEDs.
 
 *Integration issues and fixes:*
 - After stopping the program in Thonny, the display kept showing the last screen. The display and the buzzer are now switched off when the program ends.
