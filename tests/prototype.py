@@ -7,6 +7,9 @@ buzzer and the button. Shows the distance and a bar on the display, beeps
 faster as the obstacle gets closer, short press of the button = mute.
 Replaced by the final program in src/.
 
+MicroPython Nokia 5110 PCD8544 84x48 LCD driver
+https://github.com/mcauser/micropython-pcd8544
+
 Author:  Marek Šádek
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython)
          https://github.com/Szalo03/Ultrasonic-distance-instrument
@@ -17,8 +20,6 @@ import framebuf
 
 # ==========================================
 # 1. NOKIA 5110 DISPLAY CLASS (PCD8544)
-# MicroPython Nokia 5110 PCD8544 84x48 LCD driver
-# https://github.com/mcauser/micropython-pcd8544
 # ==========================================
 class PCD8544(framebuf.FrameBuffer):
     def __init__(self, spi, cs, dc, rst):
