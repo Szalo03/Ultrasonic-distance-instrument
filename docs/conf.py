@@ -3,6 +3,7 @@
 Build (from the repository root):
     pip install -r docs/requirements.txt
     sphinx-build -b html docs docs/_build/html
+or inside the docs folder: make html (Linux, macOS) / make.bat html (Windows).
 """
 import os
 import sys
@@ -32,3 +33,14 @@ autodoc_default_options = {"members": True, "undoc-members": False}
 templates_path = []
 exclude_patterns = ["_build", "_stubs"]
 html_theme = "alabaster"
+
+
+def _split_header(app, what, name, obj, options, lines):
+    """Show the "Project:" line of the file header as its own paragraph."""
+    for i in range(len(lines) - 1, 0, -1):
+        if lines[i].startswith("Project:") and lines[i - 1].strip():
+            lines.insert(i, "")
+
+
+def setup(app):
+    app.connect("autodoc-process-docstring", _split_header)

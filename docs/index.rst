@@ -13,8 +13,39 @@ The full project description, wiring and test results are in the
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 
+General documentation
+---------------------
+
 .. toctree::
    :maxdepth: 2
-   :caption: Contents
 
-   modules
+   usage
+
+Modules
+-------
+
+Component classes:
+
+.. toctree::
+   :maxdepth: 1
+
+   modules/ultrasonic
+   modules/nokia5110
+   modules/buzzer
+   modules/button
+   modules/led
+
+Application logic:
+
+.. toctree::
+   :maxdepth: 1
+
+   modules/collision
+   modules/main
+
+Indices
+-------
+
+* :ref:`genindex`
+* :ref:`modindex`
+* :ref:`search`
