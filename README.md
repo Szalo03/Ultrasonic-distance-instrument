@@ -244,8 +244,8 @@ When the obstacle does not move, the displayed value stays the same. Each sensor
 
 ### Limitations
 
-- Range of the HC-SR04 is 2–400 cm and its beam is about ±15°; soft or strongly angled surfaces may not reflect enough sound.
-- The speed of sound is taken as constant (343 m/s at 20 °C); without temperature compensation the error is about 0.17 % per °C.
+- Range of the HC-SR04 is 2–400 cm and its measuring angle is 15° (datasheet); soft or strongly angled surfaces may not reflect enough sound.
+- The speed of sound is taken as constant (343 m/s at 20 °C); without temperature compensation the error is about 0.18 % per °C.
 - The rear collision warning is a small-scale model (see [Rear collision warning](#rear-collision-warning)).
 - The display only receives data, so a disconnected display cannot be detected by the program.
 
