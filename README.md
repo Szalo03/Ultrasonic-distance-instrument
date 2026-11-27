@@ -217,16 +217,16 @@ Only built-in MicroPython modules are needed: `machine`, `time`, `framebuf`, `ua
 
 ### Distance accuracy
 
-Measured with a tape measure, flat obstacle perpendicular to the sensor.
+Measured with a tape measure, flat obstacle perpendicular to the sensor. *The values will be added after the measurement in week 5.*
 
-| Real distance | Left sensor | Right sensor |
-|---|---|---|
-| 5 cm | | |
-| 10 cm | | |
-| 20 cm | | |
-| 50 cm | | |
-| 100 cm | | |
-| 200 cm | | |
+| Real distance | Measured distance |
+|---|---|
+| 5 cm | |
+| 10 cm | |
+| 20 cm | |
+| 50 cm | |
+| 100 cm | |
+| 200 cm | |
 
 When the obstacle does not move, the displayed value stays the same. Each sensor is measured every 120 ms (the two sensors alternate every 60 ms).
 
