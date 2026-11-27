@@ -292,7 +292,7 @@ or inside the `docs` folder with `make html` (Linux, macOS) or `make.bat html` (
 <p align="center"><img src="Images/week3_display.jpg" alt="Week 3 first display layout" width="350" /></p>
 
 
-**Week 4** – The complete program tested on real hardware and everything works: distances from both sensors, the new car-style display layout with distance bars, bumper, tail lights and `MUTE`, smooth beeping by distance, the STOP distance setting (save / delete) and the rear collision warning with the hazard LEDs (warning, danger and crash levels). Documentation of all methods and coroutines completed (docstrings for Sphinx) and the source of the display driver added.
+**Week 4** – The complete program tested on real hardware and everything works: distances from both sensors, the new car-style display layout with distance bars, bumper, tail lights and `MUTE`, smooth beeping by distance, the STOP distance setting (save / delete) and the rear collision warning with the hazard LEDs (warning, danger and crash levels). Documentation of all methods and coroutines completed (docstrings), the [Sphinx documentation](#documentation) added in [`docs/`](docs/) and the source of the display driver added.
 
 *Integration issues and fixes:*
 - The first Nokia 5110 module did not show anything at all; it most likely had badly soldered pins. It was replaced by another module, which works.
