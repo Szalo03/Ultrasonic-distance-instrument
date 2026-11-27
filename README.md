@@ -200,7 +200,7 @@ The program runs five `uasyncio` tasks, so a slow display update does not delay 
 
 ## Setup and usage
 
-1. Flash the MicroPython firmware for the **Raspberry Pi Pico W** ([download](https://micropython.org/download/RPI_PICO_W/)): hold BOOTSEL, connect USB and copy the `.uf2` file to the `RPI-RP2` drive.
+1. The Pico W needs the MicroPython firmware (on our lab board it was already installed). If it is missing, download the firmware for the **Raspberry Pi Pico W** ([download](https://micropython.org/download/RPI_PICO_W/)), hold BOOTSEL, connect USB and copy the `.uf2` file to the `RPI-RP2` drive.
 2. Wire the components according to the [schematic](#schematic) and the [pin assignment](#pin-assignment).
 3. Copy all files from [`src/`](src/) to the Pico, e.g. in Thonny: open each file and use *File → Save as → Raspberry Pi Pico* with the same name.
 4. Reset the Pico (reconnect USB, or press **Ctrl+D** in the Thonny shell). [`main.py`](src/main.py) starts automatically.
