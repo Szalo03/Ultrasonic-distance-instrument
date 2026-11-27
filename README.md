@@ -215,3 +215,12 @@ The program runs five `uasyncio` tasks, so a slow display update does not delay 
 *Improvements over the prototype:* the distance is filtered by a median of the last 3 readings, and a 2 cm hysteresis keeps the bars and the sound from flickering at a border.
 
 <p align="center"><img src="Images/week3_display.jpg" alt="Week 3 first display layout" width="350" /></p>
+
+
+**Week 4** – The complete program tested on real hardware and everything works: distances from both sensors, the new car-style display layout with distance bars, bumper, tail lights and `MUTE`, smooth beeping by distance, the STOP distance setting (save / delete) and the rear collision warning with the hazard LEDs (warning, danger and crash levels). Documentation of all methods and coroutines completed (docstrings for Sphinx) and the source of the display driver added.
+
+*Integration issues and fixes:*
+- The first Nokia 5110 module did not show anything at all; it most likely had badly soldered pins. It was replaced by another module, which works.
+- With the bumper at the bottom and the distances at the top, the screen looked more like a front parking sensor and was hard to read in the model. The display is therefore mounted upside down and all text is drawn rotated by 180°, while the graphics stay the same (see the photo before the change and the [display screens](#display) after it).
+
+<p align="center"><img src="Images/week4_display.jpg" alt="Week 4 display before the text rotation" width="350" /></p>
