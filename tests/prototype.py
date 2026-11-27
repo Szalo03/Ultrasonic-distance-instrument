@@ -7,8 +7,9 @@ buzzer and the button. Shows the distance and a bar on the display, beeps
 faster as the obstacle gets closer, short press of the button = mute.
 Replaced by the final program in src/.
 
-The PCD8544 class is adapted from the MicroPython Nokia 5110 PCD8544 driver
-by Mike Causer, MIT License: https://github.com/mcauser/micropython-pcd8544
+The PCD8544 class is adapted from the MicroPython Nokia 5110 PCD8544 driver,
+Copyright (c) 2016 Mike Causer, MIT License:
+https://github.com/mcauser/micropython-pcd8544
 
 Author:  Marek Šádek
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),
