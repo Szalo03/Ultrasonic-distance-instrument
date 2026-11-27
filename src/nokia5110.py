@@ -4,8 +4,9 @@ Contains the PCD8544 class: SPI communication with the display, drawing
 through framebuf, enlarged text (big_text) for STOP / CRASH messages and
 optional 180 degree rotation of all text (flip_text).
 
-The PCD8544 class is adapted from the MicroPython Nokia 5110 PCD8544 driver
-by Mike Causer, MIT License: https://github.com/mcauser/micropython-pcd8544
+The PCD8544 class is adapted from the MicroPython Nokia 5110 PCD8544 driver,
+Copyright (c) 2016 Mike Causer, MIT License:
+https://github.com/mcauser/micropython-pcd8544
 
 Authors: Marek Šádek, Marek Gláser, Dávid Szalay
 Project: Ultrasonic parking sensor (Raspberry Pi Pico W, MicroPython),

@@ -1,9 +1,7 @@
 """main.py - main program of the ultrasonic parking sensor.
 
-Creates all components, connects them and runs the application.
 Saved on the Pico as main.py, so it starts automatically after power-on.
-
-Connects all components and runs them as uasyncio tasks:
+Creates all components, connects them and runs them as uasyncio tasks:
 
 - measure_task: sensors are triggered alternately every 60 ms
 - button_task:  button is checked every 20 ms, switches the modes
@@ -17,7 +15,8 @@ Modes:
 - SET:     current distance blinks, buzzer silent. Long press = save it as
            the STOP distance. Short press = delete the saved STOP distance
            (or just go back if none is saved). Cancelled after 15 s.
-- MESSAGE: "SAVED" / "DELETED" is shown for 1.5 s, then back to NORMAL.
+- MESSAGE: "SAVED" (with the distance) or "STOP deleted" is shown for 1.5 s,
+           then back to NORMAL.
 
 When the STOP distance is reached, a big "STOP" is shown and the buzzer
 plays a continuous tone. The STOP distance is stored in settings.json.
