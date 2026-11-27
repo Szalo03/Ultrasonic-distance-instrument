@@ -1,9 +1,10 @@
 Getting started
 ===============
 
-1. Flash the MicroPython firmware for the Raspberry Pi Pico W
-   (`download <https://micropython.org/download/RPI_PICO_W/>`_): hold BOOTSEL,
-   connect USB and copy the ``.uf2`` file to the ``RPI-RP2`` drive.
+1. The Pico W needs the MicroPython firmware (on our lab board it was already
+   installed). If it is missing, download the firmware for the Raspberry Pi
+   Pico W (`download <https://micropython.org/download/RPI_PICO_W/>`_), hold
+   BOOTSEL, connect USB and copy the ``.uf2`` file to the ``RPI-RP2`` drive.
 2. Wire the components according to the schematic and the pin assignment in the
    `README <https://github.com/Szalo03/Ultrasonic-distance-instrument>`_.
 3. Copy all files from the :file:`src` folder to the Pico, e.g. in Thonny:
