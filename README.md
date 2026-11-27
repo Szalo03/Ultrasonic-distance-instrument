@@ -109,11 +109,26 @@ A normal parking approach (slower than 40 cm/s) does not trigger the warning. Wh
 <details>
 <summary>Component pinouts</summary>
 
-<p align="center"><img src="Images/raspberry_pinout.png" alt="Raspberry Pi Pico W pinout" /></p>
-<p align="center"><img src="Images/dfrobot_gravity_board.png" alt="DFRobot Gravity board" /></p>
-<p align="center"><img src="Images/HC_SR04_Pinout.png" alt="HC-SR04 pinout" /></p>
-<p align="center"><img src="Images/Nokia_5110_LCD_Pinout.png" alt="Nokia 5110 pinout" /></p>
-<p align="center"><img src="Images/Buzzer_Pinout.png" alt="Passive buzzer pinout" /></p>
+<p align="center">
+  <img src="Images/raspberry_pinout.png" alt="Raspberry Pi Pico W pinout" /><br>
+  <sub>Source: Raspberry Pi Ltd, <a href="https://datasheets.raspberrypi.com/picow/PicoW-A4-Pinout.pdf">Pico W Pinout Diagram</a></sub>
+</p>
+<p align="center">
+  <img src="Images/dfrobot_gravity_board.png" alt="DFRobot Gravity board" /><br>
+  <sub>Source: smittytone, <a href="https://blog.smittytone.net/2023/04/24/review-dfrobot-pico-gravity-board/">Review: DFRobot Pico Gravity Board</a></sub>
+</p>
+<p align="center">
+  <img src="Images/HC_SR04_Pinout.png" alt="HC-SR04 pinout" /><br>
+  <sub>Source: Yash Raj Ghosh, <a href="https://medium.com/@yashrajghosh1323/distance-measurement-with-respect-to-time-by-using-ultrasonic-sensor-c7e0fb742c6">Distance measurement with respect to Time by using Ultrasonic Sensor</a></sub>
+</p>
+<p align="center">
+  <img src="Images/Nokia_5110_LCD_Pinout.png" alt="Nokia 5110 pinout" /><br>
+  <sub>Source: Arduino Forum, <a href="https://forum.arduino.cc/t/wiring-nokia-5110-lcd-display-module-to-arduino-uno/594250">Wiring Nokia 5110 LCD display module to Arduino UNO</a></sub>
+</p>
+<p align="center">
+  <img src="Images/Buzzer_Pinout.jpg" alt="Passive buzzer pinout" /><br>
+  <sub>Source: The Geek Pub, <a href="https://www.thegeekpub.com/wiki/sensor-wiki-ky-006-passive-piezo-buzzer-module/">Sensor Wiki: KY-006 Passive Piezo-Buzzer Module</a></sub>
+</p>
 <p align="center"><img src="Images/Push_Button.png" alt="Push button" width="400" /></p>
 
 </details>
