@@ -78,7 +78,7 @@ From the last 4 readings of each sensor (about 0.4 s) the approach speed is comp
 | Level | Condition | Reaction |
 |---|---|---|
 | Warning | approaching faster than 40 cm/s and TTC < 3 s | red hazard LEDs blink |
-| Danger | still fast and closer than 60 cm | `PREPARE FOR CRASH` blinks, LEDs blink fast, alarm sound (also when muted) |
+| Danger | approaching faster than 40 cm/s and closer than 60 cm | `PREPARE FOR CRASH` blinks, LEDs blink fast, alarm sound (also when muted) |
 | Crash | in the Danger level, the obstacle reaches the bumper (≤ 5 cm) or the sensor loses it closer than 30 cm | `CRASH` and `eCall 112` for 5 s (longer while the obstacle stays at the bumper), LEDs keep blinking |
 
 A normal parking approach (slower than 40 cm/s) does not trigger the warning. When the obstacle stops or slows down, the warning ends after 1 s. A jump of more than 40 cm between two readings (e.g. a hand put in front of the sensor from the side) starts the speed calculation again, so it is not taken as a fast approach.
